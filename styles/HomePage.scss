@@ -1,0 +1,257 @@
+.home-page {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+
+  &__header {
+    margin-bottom: 16px;
+
+    &-location {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      h2 {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+      }
+    }
+
+    &-distance {
+      font-size: 14px;
+      color: #6b7280;
+      margin-left: 24px;
+    }
+  }
+
+  &__search {
+    position: relative;
+    margin-bottom: 24px;
+
+    input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      background: #f9fafb;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+
+      &:focus {
+        box-shadow: 0 0 0 2px #e5e7eb;
+      }
+    }
+
+    &-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+    }
+  }
+
+  &__section {
+    margin-bottom: 32px;
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+
+      h2 {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0;
+      }
+
+      a {
+        font-size: 14px;
+        color: #6b7280;
+        text-decoration: none;
+
+        &:hover {
+          color: #4b5563;
+        }
+      }
+    }
+
+    &-scroll {
+      position: relative;
+      margin: 0 -16px;
+
+      &-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        padding: 0 16px 16px;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      &-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        z-index: 10;
+
+        &:hover {
+          background: #f9fafb;
+        }
+
+        &--left {
+          left: 16px;
+        }
+
+        &--right {
+          right: 16px;
+        }
+      }
+    }
+  }
+}
+
+.payment-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+
+  &__content {
+    background: white;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 448px;
+    margin: 0 16px;
+  }
+
+  &__header {
+    padding: 16px;
+    border-bottom: 1px solid #e5e7eb;
+
+    &-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        color: #6b7280;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        text-align: center;
+        flex: 1;
+        margin: 0;
+      }
+    }
+
+    &-pickup {
+      text-align: center;
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+  }
+
+  &__body {
+    padding: 16px;
+
+    h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      margin: 0 0 16px;
+    }
+  }
+
+  &__methods {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    button {
+      width: 100%;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &:hover {
+        background: #f9fafb;
+      }
+
+      .method-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        span {
+          font-size: 16px;
+        }
+      }
+
+      .arrow {
+        color: #9ca3af;
+      }
+    }
+  }
+
+  &__summary {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        &:first-child {
+          color: #6b7280;
+        }
+
+        &.total {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  &__terms {
+    text-align: center;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 24px;
+  }
+} 
