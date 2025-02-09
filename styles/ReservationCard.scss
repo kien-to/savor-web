@@ -1,0 +1,104 @@
+.reservation-card {
+  display: flex;
+  background-color: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+
+  &__image-container {
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__content {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+  }
+
+  &__status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    &--pending {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+
+    &--confirmed {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+
+    &--completed {
+      background-color: #e0e7ff;
+      color: #3730a3;
+    }
+
+    &--cancelled {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+  }
+
+  &__details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  &__detail {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+  }
+
+  &__value {
+    font-size: 0.875rem;
+    color: #1f2937;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 640px) {
+  .reservation-card {
+    flex-direction: column;
+
+    &__image-container {
+      width: 100%;
+      height: 200px;
+    }
+
+    &__details {
+      grid-template-columns: 1fr;
+    }
+  }
+} 

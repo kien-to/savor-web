@@ -19,7 +19,7 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
         <div className="store-card__badge">
           <span>1 left</span>
         </div>
-        <button 
+        {/* <button 
           className="store-card__favorite"
           onClick={(e) => {
             e.stopPropagation();
@@ -27,7 +27,7 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
           }}
         >
           🤍
-        </button>
+        </button> */}
       </div>
       <div className="store-card__content">
         <div className="store-card__header">

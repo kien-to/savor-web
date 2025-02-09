@@ -43,5 +43,6 @@ export const createReservation = async (
 
 export const getUserReservations = async (userId: string): Promise<Reservation[]> => {
   const response = await api.get(`/api/users/${userId}/reservations`);
+  console.log(response.data);
   return response.data;
 }; 

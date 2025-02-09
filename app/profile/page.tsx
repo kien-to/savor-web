@@ -1,93 +1,83 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Reservation } from '../../types';
-import { getUserReservations } from '../../utils/api';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import '@/styles/Profile.scss';
 
 export default function Profile() {
-  const [reservations, setReservations] = useState<Reservation[]>([]);
-  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchReservations = async () => {
-      try {
-        // TODO: Replace with actual user ID from authentication
-        const mockUserId = '123';
-        const data = await getUserReservations(mockUserId);
-        setReservations(data);
-      } catch (error) {
-        console.error('Error fetching reservations:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchReservations();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-500"></div>
-      </div>
-    );
-  }
+  const handleLogout = async () => {
+    try {
+      setLoading(true);
+      // TODO: Implement logout logic
+      console.log('Logging out...');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-red-500 mb-8">My Profile</h1>
-      
-      <div className="bg-white rounded-lg shadow p-6 mb-8">
-        <h2 className="text-xl font-semibold mb-4">My Information</h2>
-        <div className="space-y-2">
-          <p className="text-gray-600">Name: John Doe</p>
-          <p className="text-gray-600">Email: john@example.com</p>
+    <div className="profile-page">
+      {/* Profile Header */}
+      <div className="profile-page__header">
+        <div className="profile-page__user-info">
+          <img
+            src="https://avatars.githubusercontent.com/u/84117554?v=4"
+            alt="Profile"
+            className="profile-page__avatar"
+          />
+          <div className="profile-page__user-details">
+            <h1 className="profile-page__name">John Doe</h1>
+            <p className="profile-page__email">john@example.com</p>
+          </div>
         </div>
       </div>
 
-      <div>
-        <h2 className="text-xl font-semibold mb-4">My Reservations</h2>
-        
-        <div className="space-y-4">
-          {reservations.map((reservation) => (
-            <div
-              key={reservation.id}
-              className="card border border-red-100"
-            >
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-semibold text-red-500">
-                    Reservation #{reservation.id}
-                  </h3>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Pickup: {new Date(reservation.pickupTime).toLocaleString()}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Quantity: {reservation.quantity}
-                  </p>
-                </div>
-                <span className={`px-3 py-1 rounded-full text-sm ${
-                  reservation.status === 'confirmed'
-                    ? 'bg-green-100 text-green-800'
-                    : reservation.status === 'pending'
-                    ? 'bg-yellow-100 text-yellow-800'
-                    : reservation.status === 'completed'
-                    ? 'bg-blue-100 text-blue-800'
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {reservation.status.charAt(0).toUpperCase() + reservation.status.slice(1)}
-                </span>
-              </div>
-            </div>
-          ))}
+      {/* Quick Actions */}
+      <div className="profile-page__actions">
+        <button className="profile-page__action-btn" onClick={() => router.push('/settings')}>
+          <span className="profile-page__action-icon">⚙️</span>
+          <span>Settings</span>
+        </button>
+        <button className="profile-page__action-btn" onClick={() => router.push('/help')}>
+          <span className="profile-page__action-icon">❓</span>
+          <span>Help Center</span>
+        </button>
+        <button className="profile-page__action-btn" onClick={() => router.push('/about')}>
+          <span className="profile-page__action-icon">ℹ️</span>
+          <span>About Us</span>
+        </button>
+      </div>
 
-          {reservations.length === 0 && (
-            <div className="text-center text-gray-500 py-8">
-              You haven't made any reservations yet.
-            </div>
-          )}
+      {/* Statistics */}
+      <div className="profile-page__stats">
+        <div className="profile-page__stat-card">
+          <h3 className="profile-page__stat-value">24</h3>
+          <p className="profile-page__stat-label">Orders Made</p>
+        </div>
+        <div className="profile-page__stat-card">
+          <h3 className="profile-page__stat-value">$128.50</h3>
+          <p className="profile-page__stat-label">Money Saved</p>
+        </div>
+        <div className="profile-page__stat-card">
+          <h3 className="profile-page__stat-value">12kg</h3>
+          <p className="profile-page__stat-label">CO₂ Saved</p>
         </div>
       </div>
+
+      {/* Logout Button */}
+      <button 
+        className="profile-page__logout-btn"
+        onClick={handleLogout}
+        disabled={loading}
+      >
+        {loading ? 'Logging out...' : 'Log Out'}
+      </button>
+
+      {/* Version */}
+      <p className="profile-page__version">Version 24.11.0</p>
     </div>
   );
 } 

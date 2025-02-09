@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.scss";
+import "../styles/Navigation.scss";
 import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,24 +19,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <nav className="bg-red-500 text-white">
-          <div className="container-custom">
-            <div className="flex items-center justify-between h-16">
-              <Link href="/" className="font-bold text-xl">
-                SAVOR
-              </Link>
-              <div className="flex space-x-4">
-                <Link href="/" className="hover:text-red-200">
-                  Home
-                </Link>
-                <Link href="/profile" className="hover:text-red-200">
-                  Profile
-                </Link>
-              </div>
+        <nav className="nav">
+          <div className="nav__container">
+            <Link href="/" className="nav__logo">
+              SAVOR
+            </Link>
+            <div className="nav__menu">
+              <Link href="/reservations">Reservations</Link>
+              <Link href="/profile">Profile</Link>
             </div>
           </div>
         </nav>
-        <main className="container-custom py-8">
+        <main>
           {children}
         </main>
       </body>

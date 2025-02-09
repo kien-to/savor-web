@@ -1,0 +1,38 @@
+.nav {
+  background-color: #ef4444;
+  color: white;
+  padding: 0 16px;
+
+  &__container {
+    max-width: 1024px;
+    margin: 0 auto;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    gap: 24px;
+
+    a {
+      font-size: 16px;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #fecaca;
+      }
+    }
+  }
+} 

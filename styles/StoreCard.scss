@@ -83,7 +83,7 @@
     color: #6b7280;
 
     .rating {
-      color: #059669;
+      color: #ef4444;
       font-weight: 500;
     }
   }
@@ -96,7 +96,7 @@
 
   &__reserve {
     width: 100%;
-    background: #0d9488;
+    background: #ef4444;
     color: white;
     font-weight: 500;
     padding: 8px 0;
@@ -106,7 +106,7 @@
     transition: background-color 0.2s;
 
     &:hover {
-      background: #0f766e;
+      background: #dc2626;
     }
   }
 } 
