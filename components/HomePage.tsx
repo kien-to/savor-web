@@ -56,10 +56,12 @@ export default function HomePage() {
     setLoading(true);
     
     try {
+      console.log("district", district);
       const data = await getHomePageData(
         district.coordinates.lat,
         district.coordinates.lng
       );
+      console.log("home page data", data);
       setHomeData(data);
       setFilteredHomeData(data);
     } catch (err) {
@@ -111,8 +113,9 @@ export default function HomePage() {
         latitude: 37.7749,
         longitude: -122.4194
       };
-      
+      console.log("mock location", mockLocation);
       const data = await getHomePageData(mockLocation.latitude, mockLocation.longitude);
+      console.log("home page data", data);
       setHomeData(data);
       setFilteredHomeData(data);
     } catch (err) {

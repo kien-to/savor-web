@@ -14,6 +14,7 @@ export interface Store {
   reviews?: number;
   address?: string;
   itemsLeft?: number;
+  bagsAvailable?: number;
   highlights?: string[];
   isSaved?: boolean;
   latitude: number;

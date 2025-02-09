@@ -9,7 +9,7 @@ interface StoreCardProps {
 }
 
 export default function StoreCard({ store, onReserve }: StoreCardProps) {
-  console.log(store);
+  // console.log(store);
   return (
     <div className="store-card">
       <div className="store-card__image-container">
@@ -18,7 +18,7 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
           alt={store.title}
         />
         <div className="store-card__badge">
-          <span>1 left</span>
+          <span>{store.bagsAvailable} left</span>
         </div>
         {/* <button 
           className="store-card__favorite"
@@ -46,12 +46,12 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
           </div>
           <div className="store-card__price">
             <span className="store-card__price-original">
-              {69}k d
-              {/* ${store.originalPrice?.toFixed(2)} */}
+              {/* {69}k đ */}
+              {store.originalPrice?.toFixed(2)}k đ
             </span>
             <span className="store-card__price-discounted">
-              {60}k d
-              {/* ${store.discountedPrice?.toFixed(2)} */}
+              {/* {60}k đ */}
+              {store.discountedPrice?.toFixed(2)}k đ
             </span>
           </div>
         </div>

@@ -20,6 +20,7 @@ interface ReservationCardProps {
 }
 
 export default function ReservationCard({ reservation }: ReservationCardProps) {
+  console.log(reservation);
   return (
     <div className="reservation-card">
       <div className="reservation-card__image-container">
