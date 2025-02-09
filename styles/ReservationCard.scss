@@ -86,6 +86,23 @@
     color: #1f2937;
     font-weight: 500;
   }
+
+  &__price-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__price-original {
+    color: #666;
+    text-decoration: line-through;
+    font-size: 0.9em;
+  }
+
+  &__price-discounted {
+    color: #dc2626; // red-600
+    font-weight: 600;
+  }
 }
 
 @media (max-width: 640px) {

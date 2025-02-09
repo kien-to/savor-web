@@ -9,6 +9,7 @@ interface StoreCardProps {
 }
 
 export default function StoreCard({ store, onReserve }: StoreCardProps) {
+  console.log(store);
   return (
     <div className="store-card">
       <div className="store-card__image-container">
@@ -44,7 +45,14 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
             </div>
           </div>
           <div className="store-card__price">
-            ${store.price.toFixed(2)}
+            <span className="store-card__price-original">
+              {69}k d
+              {/* ${store.originalPrice?.toFixed(2)} */}
+            </span>
+            <span className="store-card__price-discounted">
+              {60}k d
+              {/* ${store.discountedPrice?.toFixed(2)} */}
+            </span>
           </div>
         </div>
         <button

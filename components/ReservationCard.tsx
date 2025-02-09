@@ -8,6 +8,7 @@ export interface Reservation {
   storeImage: string;
   quantity: number;
   totalAmount: number;
+  originalAmount: number;
   status: string;
   paymentId: string;
   pickupTime?: string;
@@ -37,8 +38,19 @@ export default function ReservationCard({ reservation }: ReservationCardProps) {
             <span className="reservation-card__value">{reservation.quantity}</span>
           </div>
           <div className="reservation-card__detail">
-            <span className="reservation-card__label">Total:</span>
-            <span className="reservation-card__value">${reservation.totalAmount.toFixed(2)}</span>
+            <span className="reservation-card__label">Price:</span>
+            <div className="reservation-card__price-container">
+              {reservation.originalAmount !== undefined && (
+                <span className="reservation-card__price-original">
+                  ${reservation.originalAmount.toFixed(2)}
+                </span>
+              )}
+              {reservation.totalAmount !== undefined && (
+                <span className="reservation-card__price-discounted">
+                  ${reservation.totalAmount.toFixed(2)}
+                </span>
+              )}
+            </div>
           </div>
           {reservation.pickupTime && (
             <div className="reservation-card__detail">
