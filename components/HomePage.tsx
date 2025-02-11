@@ -115,7 +115,7 @@ export default function HomePage() {
       };
       console.log("mock location", mockLocation);
       const data = await getHomePageData(mockLocation.latitude, mockLocation.longitude);
-      console.log("home page data", data);
+      // console.log("home page data", data);
       setHomeData(data);
       setFilteredHomeData(data);
     } catch (err) {
@@ -147,12 +147,12 @@ export default function HomePage() {
     
     const filteredRecommended = homeData.recommendedStores.filter(store =>
       store.title.toLowerCase().includes(searchLower) ||
-      store.description.toLowerCase().includes(searchLower)
+      (store.description?.toLowerCase() || '').includes(searchLower)
     );
 
     const filteredPickUpTomorrow = homeData.pickUpTomorrow.filter(store =>
       store.title.toLowerCase().includes(searchLower) ||
-      store.description.toLowerCase().includes(searchLower)
+      (store.description?.toLowerCase() || '').includes(searchLower)
     );
 
     setFilteredHomeData({
