@@ -6,6 +6,10 @@ interface StoreCardProps {
 }
 
 const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
+  function handleReserve(): void {
+    throw new Error('Function not implemented.');
+  }
+
     return (
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         <div className="relative h-28"> {/* Reduced height */}
@@ -38,7 +42,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
           <div className="mb-1">
             <h4 className="font-medium text-sm">Surprise Bag</h4>
             <p className="text-xs text-gray-600">
-              Pick up {store.pickUpTime}
+              Pick up {store.pickupTime}
             </p>
           </div>
           <div className="flex items-center justify-between text-sm">
@@ -50,7 +54,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
             <span className="font-semibold text-teal-700">${store.price.toFixed(2)}</span>
           </div>
           <button
-            onClick={() => handleReserve(store)}
+            onClick={() => handleReserve()}
             className="mt-1.5 w-full bg-teal-600 text-white text-xs py-1.5 rounded hover:bg-teal-700 transition-colors"
           >
             Reserve
