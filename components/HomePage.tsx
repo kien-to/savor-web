@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { HomePageData, Store } from '../types';
 import { getHomePageData } from '../utils/api';
 import Link from 'next/link';
@@ -50,18 +50,41 @@ export default function HomePage() {
   const [showPaymentMethodModal, setShowPaymentMethodModal] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(PAYMENT_METHODS[0]);
 
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        setLoading(true);
+        // Use a fixed location for initial render
+        const defaultDistrict = HANOI_DISTRICTS.find(d => d.name === 'Hoàn Kiếm');
+        if (defaultDistrict) {
+          const data = await getHomePageData(
+            defaultDistrict.coordinates.lat,
+            defaultDistrict.coordinates.lng
+          );
+          setHomeData(data);
+          setFilteredHomeData(data);
+        }
+      } catch (err) {
+        setError('Failed to fetch home data');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, []); // Empty dependency array for initial load only
+
   const handleLocationSelect = async (district: typeof HANOI_DISTRICTS[0]) => {
     setSelectedLocation(district.name);
     setShowLocationDropdown(false);
     setLoading(true);
     
     try {
-      console.log("district", district);
       const data = await getHomePageData(
         district.coordinates.lat,
         district.coordinates.lng
       );
-      console.log("home page data", data);
       setHomeData(data);
       setFilteredHomeData(data);
     } catch (err) {
@@ -73,6 +96,8 @@ export default function HomePage() {
   };
 
   const getCurrentLocation = () => {
+    if (typeof window === 'undefined') return; // Guard clause for SSR
+
     setLocationLoading(true);
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser');
@@ -104,33 +129,6 @@ export default function HomePage() {
       }
     );
   };
-
-  const fetchHomeData = useCallback(async () => {
-    try {
-      setLoading(true);
-      // Mock location for demo - replace with actual geolocation
-      const mockLocation = {
-        latitude: 37.7749,
-        longitude: -122.4194
-      };
-      console.log("mock location", mockLocation);
-      const data = await getHomePageData(mockLocation.latitude, mockLocation.longitude);
-      // console.log("home page data", data);
-      setHomeData(data);
-      setFilteredHomeData(data);
-    } catch (err) {
-      setError('Failed to fetch home data');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      fetchHomeData();
-    }
-  }, [fetchHomeData]);
 
   useEffect(() => {
     if (!homeData) {
@@ -195,12 +193,40 @@ export default function HomePage() {
 
     try {
       setLoading(true);
-      // TODO: Implement payment and reservation creation
-      console.log('Processing reservation with:', {
-        paymentMethod: method,
-        guestInfo,
-        store: selectedStore,
+      
+      if (!selectedStore) {
+        throw new Error('No store selected');
+      }
+
+      const reservationData = {
+        storeId: selectedStore.id,
+        storeName: selectedStore.title,
+        storeImage: selectedStore.imageUrl,
+        quantity: 1,
+        totalAmount: selectedStore.discountedPrice || selectedStore.price,
+        pickupTime: selectedStore.pickUpTime,
+        name: guestInfo.name,
+        email: guestInfo.email,
+        phone: guestInfo.phone,
+        paymentType: method
+      };
+
+      // Make API call to create reservation
+      const response = await fetch('http://localhost:8080/api/reservations/guest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Important for session handling
+        body: JSON.stringify(reservationData),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create reservation');
+      }
+
       setShowPaymentModal(false);
       // Reset guest info after successful reservation
       setGuestInfo({
@@ -208,9 +234,15 @@ export default function HomePage() {
         email: '',
         phone: '',
       });
+
+      // Show success message
+      alert('Reservation created successfully! Redirecting to reservations page...');
+
+      // Redirect to reservations page
+      window.location.href = '/reservations';
     } catch (err) {
       console.error('Error processing reservation:', err);
-      alert('Failed to process reservation. Please try again.');
+      alert(err instanceof Error ? err.message : 'Failed to process reservation. Please try again.');
     } finally {
       setLoading(false);
     }
