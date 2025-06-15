@@ -28,7 +28,7 @@ export default function ReservationsPage() {
       }
 
       if (!response.ok) {
-        throw new Error('Failed to fetch reservations');
+        throw new Error('Không thể tải danh sách đơn đặt hàng');
       }
 
       const data = await response.json();
@@ -37,7 +37,7 @@ export default function ReservationsPage() {
       setReservations(reservationsList);
     } catch (err) {
       console.error('Error fetching reservations:', err);
-      setError('Failed to load reservations');
+      setError('Không thể tải danh sách đơn đặt hàng');
     } finally {
       setLoading(false);
     }
@@ -51,7 +51,7 @@ export default function ReservationsPage() {
   };
 
   if (loading) {
-    return <div className="reservations-page__loading">Loading...</div>;
+    return <div className="reservations-page__loading">Đang tải...</div>;
   }
 
   if (error) {
@@ -61,15 +61,15 @@ export default function ReservationsPage() {
   if (reservations.length === 0) {
     return (
       <div className="reservations-page__empty">
-        <h2>No reservations found</h2>
-        <p>Your reservations will appear here once you make them.</p>
+        <h2>Không tìm thấy đơn đặt hàng nào</h2>
+        <p>Đơn đặt hàng của bạn sẽ xuất hiện ở đây sau khi bạn đặt hàng.</p>
       </div>
     );
   }
 
   return (
     <div className="reservations-page">
-      <h1 className="reservations-page__title">Your Reservations</h1>
+      <h1 className="reservations-page__title">Đơn đặt hàng của bạn</h1>
       <div className="reservations-page__list">
         {reservations.map(reservation => (
           <ReservationCard

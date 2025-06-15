@@ -25,7 +25,7 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
 
   // Function to safely format date
   const formatPickupTime = (pickupTime: string | null) => {
-    if (!pickupTime) return 'Not specified';
+    if (!pickupTime) return 'Chưa xác định';
     
     try {
       const date = new Date(pickupTime);
@@ -33,7 +33,7 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
       if (isNaN(date.getTime())) {
         return pickupTime; // Return original string if not a valid date
       }
-      return format(date, 'MMM d, h:mm a');
+      return format(date, 'd MMM, HH:mm');
     } catch (error) {
       console.error('Error formatting date:', error);
       return pickupTime; // Fallback to original string
@@ -57,7 +57,7 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
   }
 
   const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to cancel this reservation?')) {
+    if (window.confirm('Bạn có chắc chắn muốn hủy đơn đặt hàng này?')) {
       try {
         const response = await fetch(`http://localhost:8080/api/reservations/${reservation.id}`, {
           method: 'DELETE',
@@ -65,13 +65,13 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
         });
 
         if (!response.ok) {
-          throw new Error('Failed to delete reservation');
+          throw new Error('Không thể hủy đơn đặt hàng');
         }
 
         onDelete(reservation.id);
       } catch (error) {
         console.error('Error deleting reservation:', error);
-        alert('Failed to delete reservation. Please try again.');
+        alert('Không thể hủy đơn đặt hàng. Vui lòng thử lại.');
       }
     }
   };
@@ -91,7 +91,7 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
             <button 
               className="reservation-card__delete-button" 
               onClick={handleDelete}
-              aria-label="Delete reservation"
+              aria-label="Xóa đơn đặt hàng"
             >
               ✕
             </button>
@@ -99,35 +99,35 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
         </div>
         <div className="reservation-card__details">
           <div className="reservation-card__detail">
-            <span className="reservation-card__label">Quantity:</span>
+            <span className="reservation-card__label">Số lượng:</span>
             <span className="reservation-card__value">{reservation.quantity}</span>
           </div>
           <div className="reservation-card__detail">
-            <span className="reservation-card__label">Price:</span>
+            <span className="reservation-card__label">Giá:</span>
             <div className="reservation-card__price-container">
               {reservation.originalAmount !== undefined && (
                 <span className="reservation-card__price-original">
-                  ${reservation.originalAmount.toFixed(2)}
+                  {reservation.originalAmount.toFixed(2)}k đ
                 </span>
               )}
               {reservation.totalAmount !== undefined && (
                 <span className="reservation-card__price-discounted">
-                  ${reservation.totalAmount.toFixed(2)}
+                  {reservation.totalAmount.toFixed(2)}k đ
                 </span>
               )}
             </div>
           </div>
           {reservation.pickupTime && (
             <div className="reservation-card__detail">
-              <span className="reservation-card__label">Pickup Time:</span>
+              <span className="reservation-card__label">Thời gian nhận hàng:</span>
               <span className="reservation-card__value">
                 {formatPickupTime(reservation.pickupTime)}
               </span>
             </div>
           )}
           <div className="reservation-card__detail">
-            <span className="reservation-card__label">Reserved on:</span>
-            <span className="reservation-card__value">{format(new Date(reservation.createdAt), 'MMM d, yyyy')}</span>
+            <span className="reservation-card__label">Đặt hàng lúc:</span>
+            <span className="reservation-card__value">{format(new Date(reservation.createdAt), 'd MMM, yyyy')}</span>
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
           alt={store.title}
         />
         <div className="store-card__badge">
-          <span>{store.bagsAvailable} left</span>
+          <span>Còn {store.bagsAvailable} túi</span>
         </div>
         {/* <button 
           className="store-card__favorite"
@@ -59,7 +59,7 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
           onClick={() => onReserve?.(store)}
           className="store-card__reserve"
         >
-          Reserve
+          Đặt hàng
         </button>
       </div>
     </div>

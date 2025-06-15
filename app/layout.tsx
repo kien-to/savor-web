@@ -7,8 +7,8 @@ import Link from "next/link";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Savor - Reduce Food Waste",
-  description: "Find and reserve surprise bags from local stores",
+  title: "Savor - Giảm thiểu lãng phí thực phẩm",
+  description: "Tìm và đặt mua túi đồ ăn bất ngờ từ các cửa hàng địa phương",
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="vi">
       <body className={inter.className}>
         <nav className="nav">
           <div className="nav__container">
@@ -25,8 +25,8 @@ export default function RootLayout({
               SAVOR
             </Link>
             <div className="nav__menu">
-              <Link href="/reservations">Reservations</Link>
-              <Link href="/profile">Profile</Link>
+              <Link href="/reservations">Đơn đặt hàng</Link>
+              <Link href="/profile">Tài khoản</Link>
             </div>
           </div>
         </nav>

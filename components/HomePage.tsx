@@ -20,11 +20,11 @@ const HANOI_DISTRICTS = [
 ];
 
 const PAYMENT_METHODS = [
-  { id: 'card', name: 'Credit Card', icon: '💳' },
-  { id: 'cash', name: 'Cash', icon: '💵' },
-  { id: 'bank', name: 'Bank Transfer', icon: '🏦' },
-  { id: 'zalopay', name: 'ZaloPay', icon: '📱' },
-  { id: 'momo', name: 'Momo', icon: '💜' },
+  { id: 'cash', name: 'Tiền mặt (Thanh toán trước)', icon: '💵' },
+  // { id: 'card', name: 'Thẻ tín dụng', icon: '💳' },
+  // { id: 'bank', name: 'Chuyển khoản ngân hàng', icon: '🏦' },
+  // { id: 'zalopay', name: 'ZaloPay', icon: '📱' },
+  // { id: 'momo', name: 'Momo', icon: '💜' },
 ];
 
 export default function HomePage() {
@@ -100,7 +100,7 @@ export default function HomePage() {
 
     setLocationLoading(true);
     if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser');
+      alert('Trình duyệt của bạn không hỗ trợ định vị địa lý');
       setLocationLoading(false);
       return;
     }
@@ -114,9 +114,9 @@ export default function HomePage() {
           );
           setHomeData(data);
           setFilteredHomeData(data);
-          setSelectedLocation('Current Location');
+          setSelectedLocation('Vị trí hiện tại');
         } catch (err) {
-          setError('Failed to fetch data for your location');
+          setError('Không thể lấy dữ liệu cho vị trí của bạn');
           console.error(err);
         } finally {
           setLocationLoading(false);
@@ -124,7 +124,7 @@ export default function HomePage() {
       },
       (error) => {
         console.error('Error getting location:', error);
-        alert('Unable to get your location. Please select a district instead.');
+        alert('Không thể lấy vị trí của bạn. Vui lòng chọn quận/huyện.');
         setLocationLoading(false);
       }
     );
@@ -173,12 +173,12 @@ export default function HomePage() {
     let isValid = true;
 
     if (!guestInfo.name.trim()) {
-      errors.name = 'Name is required';
+      errors.name = 'Vui lòng nhập họ tên';
       isValid = false;
     }
 
     if (!guestInfo.email && !guestInfo.phone) {
-      errors.contact = 'Either email or phone is required';
+      errors.contact = 'Vui lòng nhập email hoặc số điện thoại';
       isValid = false;
     }
 
@@ -195,7 +195,7 @@ export default function HomePage() {
       setLoading(true);
       
       if (!selectedStore) {
-        throw new Error('No store selected');
+        throw new Error('Chưa chọn cửa hàng');
       }
 
       const reservationData = {
@@ -224,7 +224,7 @@ export default function HomePage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to create reservation');
+        throw new Error(data.error || 'Không thể tạo đơn đặt hàng');
       }
 
       setShowPaymentModal(false);
@@ -236,13 +236,13 @@ export default function HomePage() {
       });
 
       // Show success message
-      alert('Reservation created successfully! Redirecting to reservations page...');
+      alert('Đặt hàng thành công! Đang chuyển hướng đến trang đơn hàng...');
 
       // Redirect to reservations page
       window.location.href = '/reservations';
     } catch (err) {
       console.error('Error processing reservation:', err);
-      alert(err instanceof Error ? err.message : 'Failed to process reservation. Please try again.');
+      alert(err instanceof Error ? err.message : 'Không thể xử lý đơn đặt hàng. Vui lòng thử lại.');
     } finally {
       setLoading(false);
     }
@@ -314,7 +314,7 @@ export default function HomePage() {
       <div className="home-page__search">
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Tìm kiếm"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
@@ -325,15 +325,15 @@ export default function HomePage() {
        filteredHomeData?.recommendedStores.length === 0 && 
        filteredHomeData?.pickUpTomorrow.length === 0 && (
         <div className="home-page__no-results">
-          No stores found matching &quot;{searchText}&quot;
+          Không tìm thấy cửa hàng nào phù hợp với &quot;{searchText}&quot;
         </div>
       )}
 
       <main>
         <section className="home-page__section">
           <div className="home-page__section-header">
-            <h2>Recommended for you</h2>
-            <Link href="/stores/recommended">See all</Link>
+            <h2>Đề xuất cho bạn</h2>
+            <Link href="/stores/recommended">Xem tất cả</Link>
           </div>
           <div className="home-page__section-scroll">
             <button 
@@ -371,8 +371,8 @@ export default function HomePage() {
 
         <section className="home-page__section">
           <div className="home-page__section-header">
-            <h2>Pick up tomorrow</h2>
-            <Link href="/stores/tomorrow">See all</Link>
+            <h2>Nhận hàng ngày mai</h2>
+            <Link href="/stores/tomorrow">Xem tất cả</Link>
           </div>
           <div className="home-page__section-scroll">
             <button 
@@ -425,16 +425,16 @@ export default function HomePage() {
 
             <div className="payment-modal__body">
               <div className="payment-modal__guest-info">
-                <h3>YOUR INFORMATION</h3>
+                <h3>THÔNG TIN CỦA BẠN</h3>
                 <div className="payment-modal__form">
                   <div className="payment-modal__form-group">
-                    <label htmlFor="name">Name *</label>
+                    <label htmlFor="name">Họ tên *</label>
                     <input
                       type="text"
                       id="name"
                       value={guestInfo.name}
                       onChange={(e) => setGuestInfo(prev => ({ ...prev, name: e.target.value }))}
-                      placeholder="Your full name"
+                      placeholder="Họ và tên của bạn"
                     />
                     {guestInfoErrors.name && (
                       <span className="payment-modal__error">{guestInfoErrors.name}</span>
@@ -447,11 +447,11 @@ export default function HomePage() {
                       id="email"
                       value={guestInfo.email}
                       onChange={(e) => setGuestInfo(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="your@email.com"
+                      placeholder="email@cuaban.com"
                     />
                   </div>
                   <div className="payment-modal__form-group">
-                    <label htmlFor="phone">Phone</label>
+                    <label htmlFor="phone">Số điện thoại</label>
                     <input
                       type="tel"
                       id="phone"
@@ -476,31 +476,31 @@ export default function HomePage() {
                       <span>{selectedPaymentMethod.icon}</span>
                       <span>{selectedPaymentMethod.name}</span>
                     </div>
-                    <span>Change</span>
+                    <span>Thay đổi</span>
                   </button>
                 </div>
               </div>
 
               <div className="payment-modal__summary">
                 <div className="summary-row">
-                  <span>Original price</span>
+                  <span>Giá gốc</span>
                   <span className="payment-modal__price-original">
                     ${selectedStore?.originalPrice?.toFixed(2) || selectedStore?.price?.toFixed(2) || '0.00'}
                   </span>
                 </div>
                 <div className="summary-row">
-                  <span>Discount</span>
+                  <span>Giảm giá</span>
                   <span className="payment-modal__price-discount">
                     -${((selectedStore?.originalPrice || selectedStore?.price || 0) - 
                        (selectedStore?.discountedPrice || selectedStore?.price || 0)).toFixed(2)}
                   </span>
                 </div>
                 <div className="summary-row">
-                  <span>Sales taxes</span>
+                  <span>Thuế</span>
                   <span>$0.00</span>
                 </div>
                 <div className="summary-row total-row">
-                  <span>Total</span>
+                  <span>Tổng cộng</span>
                   <span>
                     ${selectedStore?.discountedPrice?.toFixed(2) || selectedStore?.price?.toFixed(2) || '0.00'}
                   </span>
@@ -512,11 +512,11 @@ export default function HomePage() {
                 onClick={() => handlePaymentSubmit(selectedPaymentMethod.id)}
                 disabled={loading}
               >
-                Pay ${selectedStore?.discountedPrice?.toFixed(2) || selectedStore?.price?.toFixed(2) || '0.00'}
+                Thanh toán ${selectedStore?.discountedPrice?.toFixed(2) || selectedStore?.price?.toFixed(2) || '0.00'}
               </button>
 
               <p className="payment-modal__terms">
-                By reserving this meal you agree to the Terms and Conditions.
+                Bằng việc đặt món này, bạn đồng ý với Điều khoản và Điều kiện.
               </p>
             </div>
           </div>
@@ -527,7 +527,7 @@ export default function HomePage() {
         <div className="payment-method-modal">
           <div className="payment-method-modal__content">
             <div className="payment-method-modal__header">
-              <h3>Select Payment Method</h3>
+              <h3>Chọn phương thức thanh toán</h3>
               <button onClick={() => setShowPaymentMethodModal(false)}>✕</button>
             </div>
             <div className="payment-method-modal__body">
