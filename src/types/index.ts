@@ -15,5 +15,19 @@ export interface Store {
   latitude: number;
   longitude: number;
   distance: string;
+  googleMapsUrl?: string;
   isSaved: boolean;
+}
+
+export interface DistanceResult {
+  distance: string;
+  duration: string;
+  meters: number;
+  seconds: number;
+}
+
+export interface DirectionsResult {
+  googleMapsUrl: string;
+  distance: string;
+  duration: string;
 } 

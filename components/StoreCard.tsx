@@ -1,6 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Store } from '../types';
+import { MapsService } from '../src/utils/maps';
+import { useLocation } from '../src/hooks/useLocation';
 import '../styles/StoreCard.scss';
 
 interface StoreCardProps {
@@ -9,7 +12,39 @@ interface StoreCardProps {
 }
 
 export default function StoreCard({ store, onReserve }: StoreCardProps) {
-  // console.log(store);
+  const { location } = useLocation();
+  const [distance, setDistance] = useState<string>('');
+  const [directionsUrl, setDirectionsUrl] = useState<string>('');
+  const [distanceLoading, setDistanceLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchDistance = async () => {
+      if (location && store.latitude && store.longitude) {
+        setDistanceLoading(true);
+        try {
+          const result = await MapsService.calculateDistance(
+            location.latitude,
+            location.longitude,
+            store.latitude,
+            store.longitude
+          );
+          setDistance(result.distance);
+          setDirectionsUrl(
+            MapsService.generateGoogleMapsURL(
+              location.latitude,
+              location.longitude,
+              store.latitude,
+              store.longitude
+            )
+          );
+        } finally {
+          setDistanceLoading(false);
+        }
+      }
+    };
+    fetchDistance();
+  }, [location, store.latitude, store.longitude]);
+
   return (
     <div className="store-card">
       <div className="store-card__image-container">
@@ -20,15 +55,16 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
         <div className="store-card__badge">
           <span>Còn {store.bagsAvailable} túi</span>
         </div>
-        {/* <button 
-          className="store-card__favorite"
-          onClick={(e) => {
-            e.stopPropagation();
-            // TODO: Implement save functionality
-          }}
-        >
-          🤍
-        </button> */}
+        {/* Directions button at top right */}
+        {directionsUrl && (
+          <button
+            className="store-card__directions-btn"
+            onClick={() => window.open(directionsUrl, '_blank')}
+            title="Chỉ đường"
+          >
+            Chỉ đường
+          </button>
+        )}
       </div>
       <div className="store-card__content">
         <div className="store-card__header">
@@ -41,7 +77,7 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
               <span className="rating">★</span>
               <span className="rating">4.6</span>
               <span>·</span>
-              <span>{store.distance}</span>
+              <span>{distanceLoading ? '...' : distance || '0 km'}</span>
             </div>
           </div>
           <div className="store-card__price">
@@ -55,6 +91,7 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
             </span>
           </div>
         </div>
+        
         <button
           onClick={() => onReserve?.(store)}
           className="store-card__reserve"

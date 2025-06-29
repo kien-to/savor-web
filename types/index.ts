@@ -20,6 +20,7 @@ export interface Store {
   latitude: number;
   longitude: number;
   is_selling: boolean;
+  googleMapsUrl?: string;
 }
 
 export interface HomePageData {
@@ -61,4 +62,11 @@ export interface Reservation {
   createdAt: string;
   pickupTime: string;
   quantity: number;
+}
+
+export interface DistanceResult {
+  distance: string;
+  duration: string;
+  meters: number;
+  seconds: number;
 } 

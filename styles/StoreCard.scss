@@ -13,6 +13,26 @@
       height: 100%;
       object-fit: cover;
     }
+
+    .store-card__directions-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      z-index: 2;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      transition: background 0.2s;
+    }
+    .store-card__directions-btn:hover {
+      background: #1d4ed8;
+    }
   }
 
   &__badge {
@@ -104,6 +124,38 @@
     &-discounted {
       color: #ff0000;
       font-weight: bold;
+    }
+  }
+
+  &__location {
+    margin: 8px 0;
+    padding: 8px 0;
+    border-top: 1px solid #f3f4f6;
+    border-bottom: 1px solid #f3f4f6;
+
+    .space-y-3 {
+      margin-top: 0;
+    }
+
+    button {
+      font-size: 11px;
+      padding: 4px 8px;
+    }
+
+    .bg-blue-50, .bg-green-50, .bg-yellow-50 {
+      padding: 6px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+
+    h4 {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    p {
+      font-size: 11px;
+      margin: 2px 0;
     }
   }
 
