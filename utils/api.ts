@@ -2,7 +2,9 @@ import axios from 'axios';
 import { SurpriseBag, User, Reservation, HomePageData } from '../types';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080',
+  baseURL: 'http://localhost:8080',
+  // "https://savor-server-production.up.railway.app",
+  // || 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -12,10 +14,32 @@ export const getHomePageData = async (
   latitude: number,
   longitude: number
 ): Promise<HomePageData> => {
-  const response = await api.get('/api/home', {
-    params: { latitude, longitude }
-  });
-  return response.data;
+  // console.log('[API] getHomePageData called with params:', { latitude, longitude });
+  // console.log('[API] Base URL:', "https://savor-server-production.up.railway.app");
+  
+  try {
+    const response = await api.get('/api/home', {
+      params: { latitude, longitude }
+    });
+    // console.log('[API] getHomePageData response status:', response.status);
+    // console.log('[API] getHomePageData response data:', response.data);
+    return response.data;
+  } catch (error) {
+    // console.error('[API] getHomePageData error:', error);
+    if (axios.isAxiosError(error)) {
+      console.error('[API] Axios error details:', {
+        message: error.message,
+        code: error.code,
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        url: error.config?.url,
+        method: error.config?.method,
+        params: error.config?.params
+      });
+    }
+    throw error;
+  }
 };
 
 export const getSurpriseBags = async (): Promise<SurpriseBag[]> => {
@@ -43,6 +67,6 @@ export const createReservation = async (
 
 export const getUserReservations = async (userId: string): Promise<Reservation[]> => {
   const response = await api.get(`/api/users/${userId}/reservations`);
-  console.log(response.data);
+  // console.log(response.data);
   return response.data;
 }; 

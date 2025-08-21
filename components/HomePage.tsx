@@ -35,8 +35,6 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState('Hoàn Kiếm');
   const [locationLoading, setLocationLoading] = useState(false);
   const [guestInfo, setGuestInfo] = useState({
     name: '',
@@ -53,53 +51,53 @@ export default function HomePage() {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
+        console.log('[HomePage] Starting fetchInitialData...');
         setLoading(true);
         // Use a fixed location for initial render
         const defaultDistrict = HANOI_DISTRICTS.find(d => d.name === 'Hoàn Kiếm');
+        console.log('[HomePage] Default district selected:', defaultDistrict);
+        
         if (defaultDistrict) {
+          console.log('[HomePage] Calling getHomePageData with coordinates:', {
+            lat: defaultDistrict.coordinates.lat,
+            lng: defaultDistrict.coordinates.lng
+          });
+          
           const data = await getHomePageData(
             defaultDistrict.coordinates.lat,
             defaultDistrict.coordinates.lng
           );
+          
+          console.log('[HomePage] getHomePageData successful, data:', data);
           setHomeData(data);
           setFilteredHomeData(data);
+        } else {
+          console.error('[HomePage] Default district not found');
+          setError('Default location not found');
         }
       } catch (err) {
+        console.error('[HomePage] fetchInitialData error:', err);
+        console.error('[HomePage] Error details:', {
+          message: err instanceof Error ? err.message : 'Unknown error',
+          stack: err instanceof Error ? err.stack : undefined,
+          name: err instanceof Error ? err.name : undefined
+        });
         setError('Failed to fetch home data');
-        console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchInitialData();
-  }, []); // Empty dependency array for initial load only
-
-  const handleLocationSelect = async (district: typeof HANOI_DISTRICTS[0]) => {
-    setSelectedLocation(district.name);
-    setShowLocationDropdown(false);
-    setLoading(true);
-    
-    try {
-      const data = await getHomePageData(
-        district.coordinates.lat,
-        district.coordinates.lng
-      );
-      setHomeData(data);
-      setFilteredHomeData(data);
-    } catch (err) {
-      setError('Failed to fetch data for selected location');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, []);
 
   const getCurrentLocation = () => {
     if (typeof window === 'undefined') return; // Guard clause for SSR
 
+    console.log('[HomePage] getCurrentLocation called');
     setLocationLoading(true);
     if (!navigator.geolocation) {
+      console.error('[HomePage] Geolocation not supported');
       alert('Trình duyệt của bạn không hỗ trợ định vị địa lý');
       setLocationLoading(false);
       return;
@@ -108,22 +106,43 @@ export default function HomePage() {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
+          console.log('[HomePage] Geolocation successful:', {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            accuracy: position.coords.accuracy
+          });
+          
           const data = await getHomePageData(
             position.coords.latitude,
             position.coords.longitude
           );
+          
+          console.log('[HomePage] Current location data fetch successful:', data);
           setHomeData(data);
           setFilteredHomeData(data);
-          setSelectedLocation('Vị trí hiện tại');
         } catch (err) {
+          console.error('[HomePage] getCurrentLocation API error:', err);
+          console.error('[HomePage] Current location error details:', {
+            message: err instanceof Error ? err.message : 'Unknown error',
+            coordinates: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            }
+          });
           setError('Không thể lấy dữ liệu cho vị trí của bạn');
-          console.error(err);
         } finally {
           setLocationLoading(false);
         }
       },
-      (error) => {
-        console.error('Error getting location:', error);
+      (error: GeolocationPositionError) => {
+        console.error('[HomePage] Geolocation error:', error);
+        console.error('[HomePage] Geolocation error details:', {
+          code: error.code,
+          message: error.message,
+          PERMISSION_DENIED: error.PERMISSION_DENIED,
+          POSITION_UNAVAILABLE: error.POSITION_UNAVAILABLE,
+          TIMEOUT: error.TIMEOUT
+        });
         alert('Không thể lấy vị trí của bạn. Vui lòng chọn quận/huyện.');
         setLocationLoading(false);
       }
@@ -212,7 +231,7 @@ export default function HomePage() {
       };
 
       // Make API call to create reservation
-      const response = await fetch('http://localhost:8080/api/reservations/guest', {
+      const response = await fetch('https://savor-server-production.up.railway.app/api/reservations/guest', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -277,37 +296,49 @@ export default function HomePage() {
           <div className="home-page__location-selector">
             <button 
               className="home-page__location-btn"
-              onClick={() => setShowLocationDropdown(!showLocationDropdown)}
+              // onClick={() => setShowLocationDropdown(!showLocationDropdown)}
+            //   >
+            //     <span>📍</span>
+            //     <span>{selectedLocation}</span>
+            //     <span className="home-page__location-arrow">▼</span>
+            //   </button>
+            //   {showLocationDropdown && (
+            //     <div className="home-page__location-dropdown">
+            //       <button 
+            //         className="home-page__location-option home-page__location-option--current"
+            //         onClick={getCurrentLocation}
+            //         disabled={locationLoading}
+            //       >
+            //         {locationLoading ? 'Getting location...' : '📱 Use current location'}
+            //       </button>
+            //       <div className="home-page__location-divider" />
+            //       {HANOI_DISTRICTS.map((district) => (
+            //         <button
+            //           key={district.name}
+            //           className="home-page__location-option"
+            //           onClick={() => handleLocationSelect(district)}
+            //         >
+            //           {district.name}
+            //         </button>
+            //       ))}
+            //     </div>
+            //   )}
+            // </div>
+            // <p className="home-page__header-distance">
+            //   within {homeData?.userLocation?.distance || 0} mi
+            // </p>
+              onClick={getCurrentLocation}
+              disabled={locationLoading}
             >
               <span>📍</span>
-              <span>{selectedLocation}</span>
-              <span className="home-page__location-arrow">▼</span>
+              <span>Vị trí hiện tại</span>
+              {/* <span>{locationLoading ? 'Đang lấy vị trí...' : selectedLocation}</span> */}
+              {/* {locationLoading && <span className="home-page__location-loading">⏳</span>} */}
             </button>
-            {showLocationDropdown && (
-              <div className="home-page__location-dropdown">
-                <button 
-                  className="home-page__location-option home-page__location-option--current"
-                  onClick={getCurrentLocation}
-                  disabled={locationLoading}
-                >
-                  {locationLoading ? 'Getting location...' : '📱 Use current location'}
-                </button>
-                <div className="home-page__location-divider" />
-                {HANOI_DISTRICTS.map((district) => (
-                  <button
-                    key={district.name}
-                    className="home-page__location-option"
-                    onClick={() => handleLocationSelect(district)}
-                  >
-                    {district.name}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
-          <p className="home-page__header-distance">
-            within {homeData?.userLocation?.distance || 0} mi
-          </p>
+          {/* <p className="home-page__header-distance">
+            trong bán kính {homeData?.userLocation?.distance || 0} km
+          </p> */}
         </div>
       </div>
 
