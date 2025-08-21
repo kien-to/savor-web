@@ -26,7 +26,7 @@ export default function RootLayout({
             </Link>
             <div className="nav__menu">
               <Link href="/reservations">Đơn đặt hàng</Link>
-              {/* <Link href="/profile">Tài khoản</Link> */}
+              <Link href="/profile">Tài khoản</Link>
             </div>
           </div>
         </nav>

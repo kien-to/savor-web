@@ -230,8 +230,9 @@ export default function HomePage() {
         paymentType: method
       };
 
+// https://savor-server-production.up.railway.app/api/reservations/guest
       // Make API call to create reservation
-      const response = await fetch('https://savor-server-production.up.railway.app/api/reservations/guest', {
+      const response = await fetch('http://localhost:8080/api/reservations/guest', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
