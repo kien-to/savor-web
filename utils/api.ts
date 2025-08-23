@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SurpriseBag, User, Reservation, HomePageData } from '../types';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://savor-server-production.up.railway.app',
   // "https://savor-server-production.up.railway.app",
   // || 'http://localhost:8080',
   headers: {

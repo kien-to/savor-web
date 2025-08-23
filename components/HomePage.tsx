@@ -365,7 +365,7 @@ export default function HomePage() {
         <section className="home-page__section">
           <div className="home-page__section-header">
             <h2>Đề xuất cho bạn</h2>
-            <Link href="/stores/recommended">Xem tất cả</Link>
+            {/* <Link href="/stores/recommended">Xem tất cả</Link> */}
           </div>
           <div className="home-page__section-scroll">
             <button 
@@ -404,7 +404,7 @@ export default function HomePage() {
         <section className="home-page__section">
           <div className="home-page__section-header">
             <h2>Nhận hàng ngày mai</h2>
-            <Link href="/stores/tomorrow">Xem tất cả</Link>
+            {/* <Link href="/stores/tomorrow">Xem tất cả</Link> */}
           </div>
           <div className="home-page__section-scroll">
             <button 
