@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { SurpriseBag, User, Reservation, HomePageData } from '../types';
+import { config } from '../config/environment';
 
 const api = axios.create({
-  baseURL: 'https://savor-server-production.up.railway.app',
-  // "https://savor-server-production.up.railway.app",
-  // || 'http://localhost:8080',
+  baseURL: config.apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -15,7 +14,7 @@ export const getHomePageData = async (
   longitude: number
 ): Promise<HomePageData> => {
   // console.log('[API] getHomePageData called with params:', { latitude, longitude });
-  // console.log('[API] Base URL:', "https://savor-server-production.up.railway.app");
+  // console.log('[API] Base URL:', config.apiUrl);
   
   try {
     const response = await api.get('/api/home', {

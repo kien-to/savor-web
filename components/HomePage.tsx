@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { HomePageData, Store } from '../types';
 import { getHomePageData } from '../utils/api';
-import Link from 'next/link';
+import { getEndpointUrl } from '../config/environment';
+
 import StoreCard from './StoreCard';
 import '../styles/HomePage.scss';
 
@@ -69,8 +70,17 @@ export default function HomePage() {
           );
           
           console.log('[HomePage] getHomePageData successful, data:', data);
-          setHomeData(data);
-          setFilteredHomeData(data);
+          
+          // Ensure the data has the expected structure with arrays
+          const safeData: HomePageData = {
+            emailVerified: data.emailVerified || false,
+            userLocation: data.userLocation || { city: 'Current Location', distance: 5 },
+            recommendedStores: data.recommendedStores || [],
+            pickUpTomorrow: data.pickUpTomorrow || []
+          };
+          
+          setHomeData(safeData);
+          setFilteredHomeData(safeData);
         } else {
           console.error('[HomePage] Default district not found');
           setError('Default location not found');
@@ -118,8 +128,17 @@ export default function HomePage() {
           );
           
           console.log('[HomePage] Current location data fetch successful:', data);
-          setHomeData(data);
-          setFilteredHomeData(data);
+          
+          // Ensure the data has the expected structure with arrays
+          const safeData: HomePageData = {
+            emailVerified: data.emailVerified || false,
+            userLocation: data.userLocation || { city: 'Current Location', distance: 5 },
+            recommendedStores: data.recommendedStores || [],
+            pickUpTomorrow: data.pickUpTomorrow || []
+          };
+          
+          setHomeData(safeData);
+          setFilteredHomeData(safeData);
         } catch (err) {
           console.error('[HomePage] getCurrentLocation API error:', err);
           console.error('[HomePage] Current location error details:', {
@@ -162,12 +181,12 @@ export default function HomePage() {
 
     const searchLower = searchText.toLowerCase().trim();
     
-    const filteredRecommended = homeData.recommendedStores.filter(store =>
+    const filteredRecommended = (homeData.recommendedStores || []).filter(store =>
       store.title.toLowerCase().includes(searchLower) ||
       (store.description?.toLowerCase() || '').includes(searchLower)
     );
 
-    const filteredPickUpTomorrow = homeData.pickUpTomorrow.filter(store =>
+    const filteredPickUpTomorrow = (homeData.pickUpTomorrow || []).filter(store =>
       store.title.toLowerCase().includes(searchLower) ||
       (store.description?.toLowerCase() || '').includes(searchLower)
     );
@@ -230,9 +249,8 @@ export default function HomePage() {
         paymentType: method
       };
 
-// https://savor-server-production.up.railway.app/api/reservations/guest
       // Make API call to create reservation
-      const response = await fetch('http://localhost:8080/api/reservations/guest', {
+      const response = await fetch(getEndpointUrl('reservationsGuest'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -354,8 +372,8 @@ export default function HomePage() {
       </div>
 
       {searchText.trim().length > 0 && 
-       filteredHomeData?.recommendedStores.length === 0 && 
-       filteredHomeData?.pickUpTomorrow.length === 0 && (
+       (filteredHomeData?.recommendedStores?.length || 0) === 0 && 
+       (filteredHomeData?.pickUpTomorrow?.length || 0) === 0 && (
         <div className="home-page__no-results">
           Không tìm thấy cửa hàng nào phù hợp với &quot;{searchText}&quot;
         </div>
@@ -383,9 +401,9 @@ export default function HomePage() {
               id="recommended-scroll"
               className="home-page__section-scroll-container"
             >
-              {filteredHomeData?.recommendedStores.map(store => (
+              {filteredHomeData?.recommendedStores?.map(store => (
                 <StoreCard key={store.id} store={store} onReserve={handleReserve} />
-              ))}
+              )) || []}
             </div>
             <button 
               className="home-page__section-scroll-button home-page__section-scroll-button--right"
@@ -422,9 +440,9 @@ export default function HomePage() {
               id="tomorrow-scroll"
               className="home-page__section-scroll-container"
             >
-              {filteredHomeData?.pickUpTomorrow.map(store => (
+              {filteredHomeData?.pickUpTomorrow?.map(store => (
                 <StoreCard key={store.id} store={store} onReserve={handleReserve} />
-              ))}
+              )) || []}
             </div>
             <button 
               className="home-page__section-scroll-button home-page__section-scroll-button--right"

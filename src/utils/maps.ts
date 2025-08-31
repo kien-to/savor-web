@@ -1,6 +1,5 @@
 import { DistanceResult, Store } from '../../types';
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+import { config } from '../../config/environment';
 
 export class MapsService {
   static async calculateDistance(
@@ -10,7 +9,7 @@ export class MapsService {
     storeLng: number
   ): Promise<DistanceResult> {
     const response = await fetch(
-      `${API_BASE_URL}/api/maps/distance?userLat=${userLat}&userLng=${userLng}&storeLat=${storeLat}&storeLng=${storeLng}`
+      `${config.apiUrl}/api/maps/distance?userLat=${userLat}&userLng=${userLng}&storeLat=${storeLat}&storeLng=${storeLng}`
     );
 
     if (!response.ok) {
@@ -29,7 +28,7 @@ export class MapsService {
     distance?: DistanceResult;
   }> {
     const response = await fetch(
-      `${API_BASE_URL}/api/maps/stores/${storeId}?userLat=${userLat}&userLng=${userLng}`
+      `${config.apiUrl}/api/maps/stores/${storeId}?userLat=${userLat}&userLng=${userLng}`
     );
 
     if (!response.ok) {

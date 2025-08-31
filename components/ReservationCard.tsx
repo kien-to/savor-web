@@ -1,4 +1,5 @@
 import { format, isPast } from 'date-fns';
+import { config } from '../config/environment';
 import '../styles/ReservationCard.scss';
 
 export interface Reservation {
@@ -59,7 +60,7 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
   const handleDelete = async () => {
     if (window.confirm('Bạn có chắc chắn muốn hủy đơn đặt hàng này?')) {
       try {
-        const response = await fetch(`http://localhost:8080/api/reservations/${reservation.id}`, {
+        const response = await fetch(`${config.apiUrl}/api/reservations/${reservation.id}`, {
           method: 'DELETE',
           credentials: 'include',
         });

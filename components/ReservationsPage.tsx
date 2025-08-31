@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import ReservationCard, { Reservation } from './ReservationCard';
+import { getEndpointUrl } from '../config/environment';
 import '../styles/ReservationsPage.scss';
 
 export default function ReservationsPage() {
@@ -16,13 +17,13 @@ export default function ReservationsPage() {
   const fetchReservations = async () => {
     try {
       // Try to fetch authenticated user reservations first
-      let response = await fetch('http://localhost:8080/api/reservations', {
+      let response = await fetch(getEndpointUrl('reservations'), {
         credentials: 'include',
       });
 
       // If unauthorized, try to fetch session reservations
       if (response.status === 401) {
-        response = await fetch('http://localhost:8080/api/reservations/session', {
+        response = await fetch(getEndpointUrl('reservationsSession'), {
           credentials: 'include',
         });
       }

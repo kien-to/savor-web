@@ -53,18 +53,24 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
           alt={store.title}
         />
         <div className="store-card__badge">
-          <span>Còn {store.bagsAvailable} túi</span>
+          <span>Còn {store.bagsAvailable || store.itemsLeft || 0} túi</span>
         </div>
         {/* Directions button at top right */}
-        {directionsUrl && (
-          <button
-            className="store-card__directions-btn"
-            onClick={() => window.open(directionsUrl, '_blank')}
-            title="Chỉ đường"
-          >
-            Chỉ đường
-          </button>
-        )}
+        <button
+          className="store-card__directions-btn"
+          onClick={() => {
+            const url = directionsUrl || MapsService.generateGoogleMapsURL(
+              location?.latitude || 21.0287,
+              location?.longitude || 105.8514,
+              store.latitude,
+              store.longitude
+            );
+            window.open(url, '_blank');
+          }}
+          title="Chỉ đường"
+        >
+          Chỉ đường
+        </button>
       </div>
       <div className="store-card__content">
         <div className="store-card__header">
@@ -75,19 +81,17 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
             <h3 className="store-card__title">{store.title}</h3>
             <div className="store-card__meta">
               <span className="rating">★</span>
-              <span className="rating">4.6</span>
+              <span className="rating">{store.rating?.toFixed(1) || '4.6'}</span>
               <span>·</span>
-              <span>{distanceLoading ? '...' : distance || '0 km'}</span>
+              <span>{distanceLoading ? '...' : distance || store.distance || 'Xem trên bản đồ'}</span>
             </div>
           </div>
           <div className="store-card__price">
             <span className="store-card__price-original">
-              {/* {69}k đ */}
-              {store.originalPrice?.toFixed(2)}k đ
+              {store.originalPrice ? `${store.originalPrice.toFixed(2)}k đ` : `${store.price.toFixed(2)}k đ`}
             </span>
             <span className="store-card__price-discounted">
-              {/* {60}k đ */}
-              {store.discountedPrice?.toFixed(2)}k đ
+              {store.discountedPrice ? `${store.discountedPrice.toFixed(2)}k đ` : `${store.price.toFixed(2)}k đ`}
             </span>
           </div>
         </div>
