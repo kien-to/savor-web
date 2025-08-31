@@ -240,14 +240,23 @@ export default function HomePage() {
         storeId: selectedStore.id,
         storeName: selectedStore.title,
         storeImage: selectedStore.imageUrl,
+        storeAddress: selectedStore.address || '',
+        storeLatitude: selectedStore.latitude,
+        storeLongitude: selectedStore.longitude,
         quantity: 1,
         totalAmount: selectedStore.discountedPrice || selectedStore.price,
+        originalPrice: selectedStore.originalPrice || selectedStore.price,
+        discountedPrice: selectedStore.discountedPrice || selectedStore.price,
         pickupTime: selectedStore.pickUpTime,
         name: guestInfo.name,
         email: guestInfo.email,
         phone: guestInfo.phone,
         paymentType: method
       };
+
+      console.log('[DEBUG] Selected store data:', selectedStore);
+      console.log('[DEBUG] Store address value:', selectedStore.address);
+      console.log('[DEBUG] Reservation data being sent:', reservationData);
 
       // Make API call to create reservation
       const response = await fetch(getEndpointUrl('reservationsGuest'), {

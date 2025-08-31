@@ -56,12 +56,19 @@ export interface User {
 
 export interface Reservation {
   id: string;
-  userId: string;
-  bagId: string;
-  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
-  createdAt: string;
-  pickupTime: string;
+  storeId: string;
+  storeName: string;
+  storeImage: string;
+  storeAddress: string;
+  storeLatitude: number;
+  storeLongitude: number;
   quantity: number;
+  totalAmount: number;
+  originalAmount: number;
+  status: string;
+  paymentId: string;
+  pickupTime?: string;
+  createdAt: string;
 }
 
 export interface DistanceResult {

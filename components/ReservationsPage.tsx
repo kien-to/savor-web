@@ -33,8 +33,11 @@ export default function ReservationsPage() {
       }
 
       const data = await response.json();
+      console.log('[ReservationsPage] Raw API response:', data);
+      
       // Handle both array response and object with reservations property
       const reservationsList = Array.isArray(data) ? data : (data.reservations || []);
+      console.log('[ReservationsPage] Processed reservations list:', reservationsList);
       setReservations(reservationsList);
     } catch (err) {
       console.error('Error fetching reservations:', err);

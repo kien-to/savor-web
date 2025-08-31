@@ -1,5 +1,7 @@
 import { format, isPast } from 'date-fns';
 import { config } from '../config/environment';
+import { MapsService } from '../src/utils/maps';
+import { useLocation } from '../src/hooks/useLocation';
 import '../styles/ReservationCard.scss';
 
 export interface Reservation {
@@ -7,6 +9,9 @@ export interface Reservation {
   storeId: string;
   storeName: string;
   storeImage: string;
+  storeAddress: string;
+  storeLatitude: number;
+  storeLongitude: number;
   quantity: number;
   totalAmount: number;
   originalAmount: number;
@@ -22,7 +27,10 @@ interface ReservationCardProps {
 }
 
 export default function ReservationCard({ reservation, onDelete }: ReservationCardProps) {
-  console.log(reservation);
+  console.log('[ReservationCard] Reservation data:', reservation);
+  console.log('[ReservationCard] Store address:', reservation.storeAddress);
+  console.log('[ReservationCard] Store coordinates:', { lat: reservation.storeLatitude, lng: reservation.storeLongitude });
+  const { location } = useLocation();
 
   // Function to safely format date
   const formatPickupTime = (pickupTime: string | null) => {
@@ -50,6 +58,17 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
     } catch {
       return false;
     }
+  };
+
+  const handleDirections = () => {
+    // Generate Google Maps directions URL using coordinates like homepage
+    const directionsUrl = MapsService.generateGoogleMapsURL(
+      location?.latitude || 21.0287, // Default to Hanoi center if no location
+      location?.longitude || 105.8514,
+      reservation.storeLatitude,
+      reservation.storeLongitude
+    );
+    window.open(directionsUrl, '_blank');
   };
 
   // Don't render if reservation is expired
@@ -90,6 +109,12 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
               {reservation.status}
             </span>
             <button 
+              className="reservation-card__directions-button"
+              onClick={handleDirections}
+            >
+              📍 Chỉ đường
+            </button>
+            <button 
               className="reservation-card__delete-button" 
               onClick={handleDelete}
               aria-label="Xóa đơn đặt hàng"
@@ -129,6 +154,10 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
           <div className="reservation-card__detail">
             <span className="reservation-card__label">Đặt hàng lúc:</span>
             <span className="reservation-card__value">{format(new Date(reservation.createdAt), 'd MMM, yyyy')}</span>
+          </div>
+          <div className="reservation-card__detail">
+            <span className="reservation-card__label">Địa chỉ:</span>
+            <span className="reservation-card__value">{reservation.storeAddress}</span>
           </div>
         </div>
       </div>
