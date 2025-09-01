@@ -225,16 +225,26 @@ export default function HomePage() {
   };
 
   const handlePaymentSubmit = async (method: string) => {
+    console.log('[RESERVATION] Starting reservation creation process...');
+    console.log('[RESERVATION] Payment method:', method);
+    
     if (!validateGuestInfo()) {
+      console.log('[RESERVATION] Guest info validation failed');
       return;
     }
 
+    console.log('[RESERVATION] Guest info validation passed');
+
     try {
       setLoading(true);
+      console.log('[RESERVATION] Loading state set to true');
       
       if (!selectedStore) {
+        console.error('[RESERVATION] No store selected');
         throw new Error('Chưa chọn cửa hàng');
       }
+      
+      console.log('[RESERVATION] Selected store:', selectedStore.id, selectedStore.title);
 
       const reservationData = {
         storeId: selectedStore.id,
@@ -254,11 +264,15 @@ export default function HomePage() {
         paymentType: method
       };
 
-      console.log('[DEBUG] Selected store data:', selectedStore);
-      console.log('[DEBUG] Store address value:', selectedStore.address);
-      console.log('[DEBUG] Reservation data being sent:', reservationData);
+      console.log('[RESERVATION] Selected store data:', selectedStore);
+      console.log('[RESERVATION] Store address value:', selectedStore.address);
+      console.log('[RESERVATION] Reservation data being sent:', reservationData);
+      console.log('[RESERVATION] API endpoint:', getEndpointUrl('reservationsGuest'));
+      console.log('[RESERVATION] Request will include credentials for session handling');
 
       // Make API call to create reservation
+      console.log('[RESERVATION] Current cookies before request:', document.cookie);
+      console.log('[RESERVATION] Making POST request to create reservation...');
       const response = await fetch(getEndpointUrl('reservationsGuest'), {
         method: 'POST',
         headers: {
@@ -268,13 +282,36 @@ export default function HomePage() {
         body: JSON.stringify(reservationData),
       });
 
+      console.log('[RESERVATION] Received response from server');
+      console.log('[RESERVATION] Response status:', response.status);
+      console.log('[RESERVATION] Response headers:', Object.fromEntries(response.headers.entries()));
+
       const data = await response.json();
+      console.log('[RESERVATION] Parsed response data:', data);
+      console.log('[RESERVATION] Current cookies after response:', document.cookie);
 
       if (!response.ok) {
+        console.error('[RESERVATION] ❌ Reservation creation failed!');
+        console.error('[RESERVATION] Error response status:', response.status);
+        console.error('[RESERVATION] Error response data:', data);
         throw new Error(data.error || 'Không thể tạo đơn đặt hàng');
       }
 
+      console.log('[RESERVATION] ✅ Reservation created successfully!');
+      console.log('[RESERVATION] Created reservation data:', data);
+      console.log('[RESERVATION] Reservation ID:', data.id);
+      
+      // Store reservation in localStorage for immediate access
+      console.log('[RESERVATION] Storing reservation in localStorage...');
+      const existingReservations = JSON.parse(localStorage.getItem('savor_reservations') || '[]');
+      existingReservations.push(data);
+      localStorage.setItem('savor_reservations', JSON.stringify(existingReservations));
+      console.log('[RESERVATION] Reservation stored in localStorage');
+      
+      console.log('[RESERVATION] Closing payment modal...');
       setShowPaymentModal(false);
+      
+      console.log('[RESERVATION] Resetting guest info...');
       // Reset guest info after successful reservation
       setGuestInfo({
         name: '',
@@ -282,15 +319,19 @@ export default function HomePage() {
         phone: '',
       });
 
+      console.log('[RESERVATION] Showing success message...');
       // Show success message
       alert('Đặt hàng thành công! Đang chuyển hướng đến trang đơn hàng...');
 
+      console.log('[RESERVATION] Redirecting to reservations page...');
       // Redirect to reservations page
       window.location.href = '/reservations';
     } catch (err) {
-      console.error('Error processing reservation:', err);
+      console.error('[RESERVATION] ❌ Error processing reservation:', err);
+      console.error('[RESERVATION] Error details:', err instanceof Error ? err.message : 'Unknown error');
       alert(err instanceof Error ? err.message : 'Không thể xử lý đơn đặt hàng. Vui lòng thử lại.');
     } finally {
+      console.log('[RESERVATION] Setting loading state to false...');
       setLoading(false);
     }
   };

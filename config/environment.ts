@@ -5,7 +5,9 @@
 
 export const config = {
   // API Configuration
-  apiUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080' || 'https://savor-server-production.up.railway.app',
+  apiUrl: 'https://savor-server-production.up.railway.app',
+//   'http://localhost:8080',
+//   process.env.NEXT_PUBLIC_API_URL,
   
   // Environment detection
   isDevelopment: process.env.NODE_ENV === 'development',
