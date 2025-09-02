@@ -45,6 +45,8 @@ export default function HomePage() {
   const [guestInfoErrors, setGuestInfoErrors] = useState({
     name: '',
     contact: '',
+    email: '',
+    phone: '',
   });
   const [showPaymentMethodModal, setShowPaymentMethodModal] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(PAYMENT_METHODS[0]);
@@ -203,19 +205,53 @@ export default function HomePage() {
     setShowPaymentModal(true);
   };
 
+  // Email validation regex
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Phone validation regex (more flexible for various formats)
+  const isValidPhone = (phone: string) => {
+    // Remove all non-digit characters for validation
+    const cleanPhone = phone.replace(/\D/g, '');
+    // Accept phone numbers with 9-15 digits (international standard)
+    // This covers most Vietnamese and international formats
+    return cleanPhone.length >= 9 && cleanPhone.length <= 15;
+  };
+
   const validateGuestInfo = () => {
     const errors = {
       name: '',
       contact: '',
+      email: '',
+      phone: '',
     };
     let isValid = true;
 
+    // Name validation
     if (!guestInfo.name.trim()) {
       errors.name = 'Vui lòng nhập họ tên';
       isValid = false;
+    } else if (guestInfo.name.trim().length < 2) {
+      errors.name = 'Họ tên phải có ít nhất 2 ký tự';
+      isValid = false;
     }
 
-    if (!guestInfo.email && !guestInfo.phone) {
+    // Email validation
+    if (guestInfo.email.trim() && !isValidEmail(guestInfo.email)) {
+      errors.email = 'Email không hợp lệ';
+      isValid = false;
+    }
+
+    // Phone validation
+    if (guestInfo.phone.trim() && !isValidPhone(guestInfo.phone)) {
+      errors.phone = 'Số điện thoại không hợp lệ';
+      isValid = false;
+    }
+
+    // Contact validation (email OR phone required)
+    if (!guestInfo.email.trim() && !guestInfo.phone.trim()) {
       errors.contact = 'Vui lòng nhập email hoặc số điện thoại';
       isValid = false;
     }
@@ -554,6 +590,9 @@ export default function HomePage() {
                       onChange={(e) => setGuestInfo(prev => ({ ...prev, email: e.target.value }))}
                       placeholder="email@cuaban.com"
                     />
+                    {guestInfoErrors.email && (
+                      <span className="payment-modal__error">{guestInfoErrors.email}</span>
+                    )}
                   </div>
                   <div className="payment-modal__form-group">
                     <label htmlFor="phone">Số điện thoại</label>
@@ -564,6 +603,9 @@ export default function HomePage() {
                       onChange={(e) => setGuestInfo(prev => ({ ...prev, phone: e.target.value }))}
                       placeholder="+84 123 456 789"
                     />
+                    {guestInfoErrors.phone && (
+                      <span className="payment-modal__error">{guestInfoErrors.phone}</span>
+                    )}
                   </div>
                   {guestInfoErrors.contact && (
                     <span className="payment-modal__error">{guestInfoErrors.contact}</span>
