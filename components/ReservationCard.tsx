@@ -61,6 +61,13 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
   };
 
   const handleDirections = () => {
+    console.log('[ReservationCard] Directions clicked for:', reservation.storeName);
+    console.log('[ReservationCard] User location:', location);
+    console.log('[ReservationCard] Store coordinates:', { 
+      lat: reservation.storeLatitude, 
+      lng: reservation.storeLongitude 
+    });
+    
     // Generate Google Maps directions URL using coordinates like homepage
     const directionsUrl = MapsService.generateGoogleMapsURL(
       location?.latitude || 21.0287, // Default to Hanoi center if no location
@@ -68,7 +75,15 @@ export default function ReservationCard({ reservation, onDelete }: ReservationCa
       reservation.storeLatitude,
       reservation.storeLongitude
     );
-    window.open(directionsUrl, '_blank');
+    
+    console.log('[ReservationCard] Generated Google Maps URL:', directionsUrl);
+    
+    // Try to open in new tab, fallback to same tab if popup blocked
+    const newWindow = window.open(directionsUrl, '_blank');
+    if (!newWindow) {
+      console.warn('[ReservationCard] Popup blocked, opening in same tab');
+      window.location.href = directionsUrl;
+    }
   };
 
   // Don't render if reservation is expired

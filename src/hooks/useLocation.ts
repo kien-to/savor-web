@@ -21,10 +21,12 @@ export const useLocation = (): UseLocationReturn => {
   const [error, setError] = useState<string | null>(null);
 
   const requestLocation = useCallback(() => {
+    console.log('[useLocation] Requesting user location...');
     setIsLoading(true);
     setError(null);
 
     if (!navigator.geolocation) {
+      console.error('[useLocation] Geolocation not supported');
       setError('Geolocation is not supported by this browser');
       setIsLoading(false);
       return;
@@ -32,6 +34,10 @@ export const useLocation = (): UseLocationReturn => {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log('[useLocation] Location obtained:', {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
         setLocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -43,14 +49,18 @@ export const useLocation = (): UseLocationReturn => {
         switch (error.code) {
           case error.PERMISSION_DENIED:
             errorMessage = 'Location permission denied';
+            console.warn('[useLocation] Location permission denied by user');
             break;
           case error.POSITION_UNAVAILABLE:
             errorMessage = 'Location information unavailable';
+            console.warn('[useLocation] Location information unavailable');
             break;
           case error.TIMEOUT:
             errorMessage = 'Location request timed out';
+            console.warn('[useLocation] Location request timed out');
             break;
         }
+        console.error('[useLocation] Location error:', errorMessage);
         setError(errorMessage);
         setIsLoading(false);
       },

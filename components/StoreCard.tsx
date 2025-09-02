@@ -59,13 +59,25 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
         <button
           className="store-card__directions-btn"
           onClick={() => {
+            console.log('[StoreCard] Directions clicked for store:', store.title);
+            console.log('[StoreCard] User location:', location);
+            console.log('[StoreCard] Store coordinates:', { lat: store.latitude, lng: store.longitude });
+            
             const url = directionsUrl || MapsService.generateGoogleMapsURL(
               location?.latitude || 21.0287,
               location?.longitude || 105.8514,
               store.latitude,
               store.longitude
             );
-            window.open(url, '_blank');
+            
+            console.log('[StoreCard] Generated Google Maps URL:', url);
+            
+            // Try to open in new tab, fallback to same tab if popup blocked
+            const newWindow = window.open(url, '_blank');
+            if (!newWindow) {
+              console.warn('[StoreCard] Popup blocked, opening in same tab');
+              window.location.href = url;
+            }
           }}
           title="Chỉ đường"
         >
