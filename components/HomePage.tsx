@@ -515,7 +515,12 @@ export default function HomePage() {
             <div className="payment-modal__header">
               <div className="payment-modal__header-inner">
                 <button onClick={() => setShowPaymentModal(false)}>✕</button>
-                <h2>{selectedStore.title}</h2>
+                <div className="payment-modal__store-info">
+                  <h2>{selectedStore.title}</h2>
+                  {selectedStore.address && (
+                    <p className="payment-modal__store-address">{selectedStore.address}</p>
+                  )}
+                </div>
                 <div></div>
               </div>
               <p className="payment-modal__header-pickup">

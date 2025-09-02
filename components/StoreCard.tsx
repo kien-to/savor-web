@@ -45,8 +45,37 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
     fetchDistance();
   }, [location, store.latitude, store.longitude]);
 
+  const handleDirections = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click when clicking directions
+    console.log('[StoreCard] Directions clicked for store:', store.title);
+    console.log('[StoreCard] User location:', location);
+    console.log('[StoreCard] Store coordinates:', { lat: store.latitude, lng: store.longitude });
+    
+    const url = directionsUrl || MapsService.generateGoogleMapsURL(
+      location?.latitude || 21.0287,
+      location?.longitude || 105.8514,
+      store.latitude,
+      store.longitude
+    );
+    
+    console.log('[StoreCard] Generated Google Maps URL:', url);
+    
+    // Try to open in new tab, fallback to same tab if popup blocked
+    const newWindow = window.open(url, '_blank');
+    if (!newWindow) {
+      console.warn('[StoreCard] Popup blocked, opening in same tab');
+      window.location.href = url;
+    }
+  };
+
+  const handleCardClick = () => {
+    if (onReserve) {
+      onReserve(store);
+    }
+  };
+
   return (
-    <div className="store-card">
+    <div className="store-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <div className="store-card__image-container">
         <img
           src={store.imageUrl}
@@ -58,27 +87,7 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
         {/* Directions button at top right */}
         <button
           className="store-card__directions-btn"
-          onClick={() => {
-            console.log('[StoreCard] Directions clicked for store:', store.title);
-            console.log('[StoreCard] User location:', location);
-            console.log('[StoreCard] Store coordinates:', { lat: store.latitude, lng: store.longitude });
-            
-            const url = directionsUrl || MapsService.generateGoogleMapsURL(
-              location?.latitude || 21.0287,
-              location?.longitude || 105.8514,
-              store.latitude,
-              store.longitude
-            );
-            
-            console.log('[StoreCard] Generated Google Maps URL:', url);
-            
-            // Try to open in new tab, fallback to same tab if popup blocked
-            const newWindow = window.open(url, '_blank');
-            if (!newWindow) {
-              console.warn('[StoreCard] Popup blocked, opening in same tab');
-              window.location.href = url;
-            }
-          }}
+          onClick={handleDirections}
           title="Chỉ đường"
         >
           Chỉ đường
@@ -91,6 +100,9 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
           </div>
           <div className="store-card__info">
             <h3 className="store-card__title">{store.title}</h3>
+            {store.address && (
+              <p className="store-card__address">{store.address}</p>
+            )}
             <div className="store-card__meta">
               <span className="rating">★</span>
               <span className="rating">{store.rating?.toFixed(1) || '4.6'}</span>
@@ -109,7 +121,10 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
         </div>
         
         <button
-          onClick={() => onReserve?.(store)}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent card click when clicking reserve button
+            onReserve?.(store);
+          }}
           className="store-card__reserve"
         >
           Đặt hàng

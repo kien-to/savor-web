@@ -255,7 +255,27 @@
         margin: 0;
       }
     }
+  }
 
+  &__store-info {
+    flex: 1;
+    text-align: center;
+    
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  &__store-address {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 4px 0 0 0;
+    font-weight: normal;
+  }
+
+  &__header {
     &-pickup {
       text-align: center;
       font-size: 14px;
