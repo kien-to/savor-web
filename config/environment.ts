@@ -4,10 +4,8 @@
  */
 
 export const config = {
-  // API Configuration
-  apiUrl: 'https://savor-server-production.up.railway.app',
-//   'http://localhost:8080',
-//   process.env.NEXT_PUBLIC_API_URL,
+  // API Configuration - use environment variable or fallback to Railway
+  apiUrl: process.env.NEXT_PUBLIC_API_URL || 'https://savor-server-production.up.railway.app',
   
   // Environment detection
   isDevelopment: process.env.NODE_ENV === 'development',
