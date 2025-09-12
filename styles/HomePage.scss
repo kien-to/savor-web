@@ -2,6 +2,8 @@
   max-width: 1024px;
   margin: 0 auto;
   padding: 16px;
+  background-color: #fff6e7;
+  min-height: 100vh;
 
   &__header {
     margin-bottom: 16px;
@@ -14,7 +16,8 @@
 
     &-distance {
       font-size: 14px;
-      color: #6b7280;
+      color: #004d3d;
+      opacity: 0.7;
       margin-left: 24px;
     }
   }
@@ -26,14 +29,20 @@
     input {
       width: 100%;
       padding: 10px 16px 10px 40px;
-      background: #f9fafb;
-      border: none;
+      background: #fff6e7;
+      border: 2px solid rgba(0, 77, 61, 0.2);
       border-radius: 8px;
       font-size: 14px;
       outline: none;
+      color: #004d3d;
 
       &:focus {
-        box-shadow: 0 0 0 2px #e5e7eb;
+        border-color: #004d3d;
+        box-shadow: 0 0 0 3px rgba(0, 77, 61, 0.1);
+      }
+
+      &::placeholder {
+        color: rgba(0, 77, 61, 0.5);
       }
     }
 
@@ -42,7 +51,7 @@
       left: 12px;
       top: 50%;
       transform: translateY(-50%);
-      color: #9ca3af;
+      color: rgba(0, 77, 61, 0.6);
     }
   }
 
@@ -58,17 +67,21 @@
 
       h2 {
         font-size: 18px;
-        font-weight: 500;
+        font-weight: 600;
         margin: 0;
+        color: #004d3d;
       }
 
       a {
         font-size: 14px;
-        color: #6b7280;
+        color: #004d3d;
+        opacity: 0.7;
         text-decoration: none;
+        font-weight: 500;
 
         &:hover {
-          color: #4b5563;
+          opacity: 1;
+          text-decoration: underline;
         }
       }
     }
@@ -145,23 +158,24 @@
     align-items: center;
     gap: 8px;
     padding: 8px 12px;
-    background-color: white;
-    border: 1px solid #e5e7eb;
+    background-color: #fff6e7;
+    border: 2px solid rgba(0, 77, 61, 0.3);
     border-radius: 8px;
     font-size: 16px;
     font-weight: 500;
-    color: #1f2937;
+    color: #004d3d;
     cursor: pointer;
     transition: all 0.2s;
 
     &:hover {
-      background-color: #f9fafb;
+      background-color: rgba(0, 77, 61, 0.05);
+      border-color: #004d3d;
     }
   }
 
   &__location-arrow {
     font-size: 12px;
-    color: #6b7280;
+    color: rgba(0, 77, 61, 0.6);
   }
 
   &__location-dropdown {
@@ -170,10 +184,10 @@
     left: 0;
     right: 0;
     margin-top: 4px;
-    background-color: white;
-    border: 1px solid #e5e7eb;
+    background-color: #fff6e7;
+    border: 2px solid rgba(0, 77, 61, 0.2);
     border-radius: 8px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 77, 61, 0.1);
     z-index: 50;
     max-height: 300px;
     overflow-y: auto;
@@ -187,16 +201,17 @@
     background: none;
     border: none;
     font-size: 14px;
-    color: #1f2937;
+    color: #004d3d;
     cursor: pointer;
 
     &:hover {
-      background-color: #f9fafb;
+      background-color: rgba(0, 77, 61, 0.05);
     }
 
     &--current {
-      color: #ef4444;
-      font-weight: 500;
+      color: #004d3d;
+      font-weight: 600;
+      background-color: rgba(0, 77, 61, 0.1);
     }
 
     &:disabled {
@@ -207,7 +222,7 @@
 
   &__location-divider {
     height: 1px;
-    background-color: #e5e7eb;
+    background-color: rgba(0, 77, 61, 0.2);
     margin: 4px 0;
   }
 }
@@ -294,7 +309,7 @@
     h3 {
       font-size: 14px;
       font-weight: 600;
-      color: #374151;
+      color: #004d3d;
       margin-bottom: 16px;
     }
   }
@@ -312,25 +327,27 @@
 
     label {
       font-size: 14px;
-      color: #374151;
+      color: #004d3d;
       font-weight: 500;
     }
 
     input {
       padding: 12px;
-      border: 1px solid #e5e7eb;
+      border: 2px solid rgba(0, 77, 61, 0.3);
       border-radius: 8px;
       font-size: 14px;
-      transition: all 0.2s;
+      background: #fff6e7;
+      color: #004d3d;
+      transition: all 0.3s ease;
 
       &:focus {
         outline: none;
-        border-color: #ef4444;
-        box-shadow: 0 0 0 1px #ef4444;
+        border-color: #004d3d;
+        box-shadow: 0 0 0 3px rgba(0, 77, 61, 0.1);
       }
 
       &::placeholder {
-        color: #9ca3af;
+        color: rgba(0, 77, 61, 0.5);
       }
     }
   }
@@ -340,16 +357,16 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px;
-    background: white;
-    border: 1px solid #e5e7eb;
+    background: #fff6e7;
+    border: 2px solid rgba(0, 77, 61, 0.3);
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     width: 100%;
 
     &:hover {
-      background: #f9fafb;
-      border-color: #d1d5db;
+      background: rgba(0, 77, 61, 0.05);
+      border-color: #004d3d;
     }
 
     .payment-modal__method-info {
@@ -363,19 +380,20 @@
 
       span:last-child {
         font-weight: 500;
-        color: #1f2937;
+        color: #004d3d;
       }
     }
 
     span:last-child {
-      color: #ef4444;
+      color: #004d3d;
       font-size: 14px;
       font-weight: 500;
     }
   }
 
   &__summary {
-    background: #f9fafb;
+    background: rgba(0, 77, 61, 0.05);
+    border: 1px solid rgba(0, 77, 61, 0.2);
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 24px;
@@ -384,7 +402,8 @@
       display: flex;
       justify-content: space-between;
       font-size: 14px;
-      color: #6b7280;
+      color: #004d3d;
+      opacity: 0.7;
       
       &:not(:last-child) {
         margin-bottom: 12px;
@@ -393,9 +412,10 @@
       &.total-row {
         margin-top: 12px;
         padding-top: 12px;
-        border-top: 1px solid #e5e7eb;
+        border-top: 2px solid rgba(0, 77, 61, 0.2);
         font-weight: 600;
-        color: #1f2937;
+        color: #004d3d;
+        opacity: 1;
         font-size: 16px;
       }
     }
@@ -404,29 +424,31 @@
   &__price {
     &-original {
       text-decoration: line-through;
+      color: rgba(0, 77, 61, 0.5);
     }
 
     &-discount {
-      color: #059669;
-      font-weight: 500;
+      color: #004d3d;
+      font-weight: 600;
     }
   }
 
   &__pay-button {
     width: 100%;
-    background: #ef4444;
-    color: white;
-    border: none;
+    background: #004d3d;
+    color: #fff6e7;
+    border: 2px solid #004d3d;
     border-radius: 8px;
     padding: 16px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
     margin-bottom: 16px;
 
     &:hover {
-      background: #dc2626;
+      background: transparent;
+      color: #004d3d;
     }
 
     &:disabled {
@@ -438,12 +460,13 @@
   &__terms {
     text-align: center;
     font-size: 12px;
-    color: #6b7280;
+    color: #004d3d;
+    opacity: 0.6;
   }
 
   &__error {
     font-size: 12px;
-    color: #ef4444;
+    color: #cc0000;
     margin-top: 2px;
   }
 }
@@ -458,7 +481,8 @@
   z-index: 60;
 
   &__content {
-    background: white;
+    background: #fff6e7;
+    border: 2px solid #004d3d;
     border-radius: 8px;
     width: 100%;
     max-width: 400px;
@@ -468,7 +492,7 @@
 
   &__header {
     padding: 16px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 2px solid rgba(0, 77, 61, 0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -476,20 +500,22 @@
     h3 {
       font-size: 16px;
       font-weight: 600;
-      color: #1f2937;
+      color: #004d3d;
       margin: 0;
     }
 
     button {
-      color: #6b7280;
+      color: #004d3d;
+      opacity: 0.7;
       background: none;
       border: none;
       cursor: pointer;
       padding: 4px;
       font-size: 18px;
+      transition: opacity 0.2s;
 
       &:hover {
-        color: #374151;
+        opacity: 1;
       }
     }
   }
@@ -504,21 +530,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: white;
+    background: #fff6e7;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    color: #004d3d;
 
     &:hover {
-      background: #f9fafb;
+      background: rgba(0, 77, 61, 0.05);
     }
 
     &--selected {
-      background: #fef2f2;
+      background: rgba(0, 77, 61, 0.1);
+      border: 1px solid #004d3d;
       
       &:hover {
-        background: #fee2e2;
+        background: rgba(0, 77, 61, 0.15);
       }
     }
   }
@@ -535,12 +563,12 @@
     span:last-child {
       font-size: 14px;
       font-weight: 500;
-      color: #1f2937;
+      color: #004d3d;
     }
   }
 
   &__check {
-    color: #ef4444;
+    color: #004d3d;
     font-size: 18px;
     font-weight: bold;
   }

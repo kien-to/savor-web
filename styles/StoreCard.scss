@@ -1,8 +1,15 @@
 .store-card {
   flex: 0 0 280px;
-  background: white;
+  background: #fff6e7;
   border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 77, 61, 0.1);
+  border: 1px solid rgba(0, 77, 61, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 77, 61, 0.15);
+    transform: translateY(-2px);
+  }
 
   &__image-container {
     position: relative;
@@ -18,8 +25,8 @@
       position: absolute;
       top: 8px;
       right: 8px;
-      background: #2563eb;
-      color: #fff;
+      background: #004d3d;
+      color: #fff6e7;
       border: none;
       border-radius: 6px;
       padding: 4px 10px;
@@ -27,11 +34,12 @@
       font-weight: 500;
       cursor: pointer;
       z-index: 2;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-      transition: background 0.2s;
+      box-shadow: 0 1px 4px rgba(0, 77, 61, 0.2);
+      transition: all 0.2s;
     }
     .store-card__directions-btn:hover {
-      background: #1d4ed8;
+      background: #003d30;
+      transform: translateY(-1px);
     }
   }
 
@@ -87,17 +95,19 @@
   }
 
   &__title {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #004d3d;
   }
 
   &__address {
     font-size: 12px;
-    color: #6b7280;
+    color: #004d3d;
+    opacity: 0.7;
     margin: 2px 0 0 0;
     white-space: nowrap;
     overflow: hidden;
@@ -110,11 +120,13 @@
     align-items: center;
     gap: 4px;
     font-size: 14px;
-    color: #6b7280;
+    color: #004d3d;
+    opacity: 0.7;
 
     .rating {
-      color: #ef4444;
-      font-weight: 500;
+      color: #004d3d;
+      font-weight: 600;
+      opacity: 1;
     }
   }
 
@@ -127,12 +139,12 @@
 
     &-original {
       text-decoration: line-through;
-      color: #666;
+      color: rgba(0, 77, 61, 0.5);
       font-size: 0.9em;
     }
 
     &-discounted {
-      color: #ff0000;
+      color: #004d3d;
       font-weight: bold;
     }
   }
@@ -171,17 +183,19 @@
 
   &__reserve {
     width: 100%;
-    background: #ef4444;
-    color: white;
-    font-weight: 500;
+    background: #004d3d;
+    color: #fff6e7;
+    font-weight: 600;
     padding: 8px 0;
-    border: none;
+    border: 2px solid #004d3d;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
 
     &:hover {
-      background: #dc2626;
+      background: transparent;
+      color: #004d3d;
+      transform: translateY(-1px);
     }
   }
 } 

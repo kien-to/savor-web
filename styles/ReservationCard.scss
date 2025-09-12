@@ -1,10 +1,17 @@
 .reservation-card {
   display: flex;
-  background-color: white;
+  background-color: #fff6e7;
   border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 77, 61, 0.1);
+  border: 1px solid rgba(0, 77, 61, 0.2);
   margin-bottom: 1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 77, 61, 0.15);
+    transform: translateY(-1px);
+  }
 
   &__image-container {
     width: 160px;
@@ -39,7 +46,7 @@
   &__title {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #1f2937;
+    color: #004d3d;
     margin: 0;
   }
 
@@ -83,13 +90,14 @@
 
   &__label {
     font-size: 0.875rem;
-    color: #6b7280;
+    color: #004d3d;
+    opacity: 0.7;
     margin-bottom: 0.25rem;
   }
 
   &__value {
     font-size: 0.875rem;
-    color: #1f2937;
+    color: #004d3d;
     font-weight: 500;
   }
 
@@ -100,13 +108,13 @@
   }
 
   &__price-original {
-    color: #666;
+    color: rgba(0, 77, 61, 0.5);
     text-decoration: line-through;
     font-size: 0.9em;
   }
 
   &__price-discounted {
-    color: #dc2626; // red-600
+    color: #004d3d;
     font-weight: 600;
   }
 
@@ -118,26 +126,27 @@
   }
 
   &__directions-button {
-    background-color: #3b82f6;
-    color: white;
-    border: none;
+    background-color: #004d3d;
+    color: #fff6e7;
+    border: 2px solid #004d3d;
     border-radius: 0.375rem;
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
     white-space: nowrap;
 
     &:hover {
-      background-color: #2563eb;
+      background-color: transparent;
+      color: #004d3d;
     }
 
     &:active {
-      background-color: #1d4ed8;
+      transform: scale(0.95);
     }
   }
 

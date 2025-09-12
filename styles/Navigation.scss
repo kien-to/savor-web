@@ -1,7 +1,8 @@
 .nav {
-  background-color: #ef4444;
-  color: white;
+  background-color: #004d3d;
+  color: #fff6e7;
   padding: 0 16px;
+  box-shadow: 0 2px 4px rgba(0, 77, 61, 0.1);
 
   &__container {
     max-width: 1024px;
@@ -16,9 +17,11 @@
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 0.5px;
+    color: #fff6e7;
 
     &:hover {
       opacity: 0.9;
+      transform: scale(1.02);
     }
   }
 
@@ -28,10 +31,37 @@
 
     a {
       font-size: 16px;
-      transition: color 0.2s;
+      transition: all 0.3s ease;
+      color: #fff6e7;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 500;
 
       &:hover {
-        color: #fecaca;
+        background-color: rgba(255, 246, 231, 0.1);
+        color: #fff6e7;
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 12px;
+
+    &__container {
+      height: 56px;
+    }
+
+    &__logo {
+      font-size: 20px;
+    }
+
+    &__menu {
+      gap: 16px;
+
+      a {
+        font-size: 14px;
+        padding: 6px 12px;
       }
     }
   }

@@ -3,28 +3,53 @@
 @tailwind utilities;
 
 :root {
-  --primary: #E53E3E;
-  --primary-dark: #C53030;
-  --background: #FFFFFF;
-  --foreground: #000000;
+  --primary: #004d3d;
+  --primary-dark: #003d30;
+  --background: #fff6e7;
+  --foreground: #004d3d;
+  --accent: #fff6e7;
 }
 
 @layer base {
   body {
-    @apply bg-white text-gray-900;
+    background-color: #fff6e7;
+    color: #004d3d;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors;
+    background-color: #004d3d;
+    color: #fff6e7;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    border: 2px solid #004d3d;
+  }
+  
+  .btn-primary:hover {
+    background-color: transparent;
+    color: #004d3d;
+    border-color: #004d3d;
   }
   
   .card {
-    @apply bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow;
+    background-color: #fff6e7;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 77, 61, 0.1);
+    padding: 1rem;
+    border: 1px solid rgba(0, 77, 61, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 15px rgba(0, 77, 61, 0.15);
   }
   
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 } 
