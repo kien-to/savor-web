@@ -5,7 +5,7 @@
 
 export const config = {
   // API Configuration - use environment variable or fallback to Railway
-  apiUrl: 'https://savor-server-production.up.railway.app',
+  apiUrl: 'http://localhost:8080',
   // process.env.NEXT_PUBLIC_API_URL || 'https://savor-server-production.up.railway.app' || 'http://localhost:8080',
   
   // Environment detection
@@ -20,6 +20,8 @@ export const config = {
     reservations: '/api/reservations',
     reservationsGuest: '/api/reservations/guest',
     reservationsSession: '/api/reservations/session',
+    deleteReservation: '/api/reservations',
+    deleteGuestReservation: '/api/reservations/guest',
   }
 } as const;
 

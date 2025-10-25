@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+.store-owner-layout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff6e7;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Montserrat', sans-serif;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: #004d3d;
+    color: #fff6e7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  &__exit-button {
+    background: none;
+    border: none;
+    color: #fff6e7;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 246, 231, 0.1);
+    }
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  &__tab-content {
+    padding: 1.5rem;
+    height: 100%;
+  }
+
+  &__tab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  &__tab-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #004d3d;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  &__section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #004d3d;
+    margin-bottom: 0.75rem;
+    margin-top: 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  &__refresh-button {
+    background: #004d3d;
+    color: #fff6e7;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: #003d30;
+    }
+  }
+
+  &__reservations-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__reservation-card {
+    background: #fff6e7;
+    border: 1px solid #004d3d;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 77, 61, 0.1);
+    }
+  }
+
+  &__reservation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  &__customer-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #004d3d;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  &__status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &--active {
+      background: #4CAF50;
+      color: white;
+    }
+
+    &--picked_up {
+      background: #2196F3;
+      color: white;
+    }
+  }
+
+  &__reservation-details {
+    font-size: 0.9rem;
+    color: #004d3d;
+    margin: 0 0 0.5rem 0;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  &__pickup-time {
+    font-size: 0.9rem;
+    color: #004d3d;
+    margin: 0 0 1rem 0;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  &__pickup-button {
+    background: #004d3d;
+    color: #fff6e7;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+
+    &:hover {
+      background: #003d30;
+    }
+  }
+
+  &__setting-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #fff6e7;
+    border-radius: 8px;
+    border: 1px solid #004d3d;
+  }
+
+  &__setting-label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #004d3d;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 1rem;
+  }
+
+  &__setting-value {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__value-button {
+    background: #036B52;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: #025a47;
+    }
+  }
+
+  &__value-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  &__bottom-tabs {
+    display: flex;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    padding: 0.5rem 0 1rem 0;
+  }
+
+  &__bottom-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #f8f9fa;
+    }
+
+    &--active {
+      .store-owner-layout__bottom-tab-icon {
+        transform: scale(1.1);
+      }
+      .store-owner-layout__bottom-tab-text {
+        color: #036B52;
+        font-weight: 600;
+      }
+    }
+  }
+
+  &__bottom-tab-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+    transition: transform 0.3s ease;
+  }
+
+  &__bottom-tab-text {
+    font-size: 0.75rem;
+    color: #666;
+    transition: color 0.3s ease;
+  }
+}
+
+@media (max-width: 768px) {
+  .store-owner-layout {
+    &__header {
+      padding: 1rem;
+    }
+
+    &__tab-content {
+      padding: 1rem;
+    }
+
+    &__reservation-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    &__setting-value {
+      justify-content: center;
+    }
+  }
+}

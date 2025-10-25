@@ -1,0 +1,451 @@
+.store-owner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1rem;
+
+    &-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #036B52;
+      margin: 0;
+    }
+  }
+
+  &__loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+  }
+
+  &__loading {
+    font-size: 1.2rem;
+    color: #666;
+  }
+
+  &__toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: 1px solid #e0e0e0;
+  }
+
+  &__toggle-info {
+    flex: 1;
+  }
+
+  &__toggle-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #333;
+  }
+
+  &__toggle-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+  }
+
+  &__switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+
+      &:checked + .store-owner__slider {
+        background-color: #036B52;
+
+        &:before {
+          transform: translateX(26px);
+        }
+      }
+    }
+  }
+
+  &__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+  }
+
+  &__no-store {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  &__no-store-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  &__no-store-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #036B52;
+    margin: 0 0 1rem 0;
+  }
+
+  &__no-store-description {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+    max-width: 500px;
+  }
+
+  &__signup-button {
+    background: #036B52;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: #025a47;
+    }
+  }
+
+  &__full-screen-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__bottom-tab-container {
+    display: flex;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    padding: 0.5rem 0 1rem 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+  }
+
+  &__bottom-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #f8f9fa;
+    }
+
+    &--active {
+      .store-owner__bottom-tab-icon {
+        transform: scale(1.1);
+      }
+      .store-owner__bottom-tab-text {
+        color: #036B52;
+        font-weight: 600;
+      }
+    }
+  }
+
+  &__bottom-tab-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+    transition: transform 0.3s ease;
+  }
+
+  &__bottom-tab-text {
+    font-size: 0.75rem;
+    color: #666;
+    transition: color 0.3s ease;
+  }
+
+  &__tab-content {
+    padding: 1rem 0;
+  }
+
+  &__tab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  &__tab-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+  }
+
+  &__refresh-button {
+    background: #036B52;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: #025a47;
+    }
+  }
+
+  &__empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem;
+    text-align: center;
+  }
+
+  &__empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  &__empty-text {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+  }
+
+  &__reservations-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__reservation-card {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__reservation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  &__customer-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  &__status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &--confirmed {
+      background: #4CAF50;
+      color: white;
+    }
+
+    &--pending {
+      background: #FF9800;
+      color: white;
+    }
+
+    &--picked_up {
+      background: #2196F3;
+      color: white;
+    }
+  }
+
+  &__reservation-details {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__pickup-time {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 1rem 0;
+  }
+
+  &__pickup-button {
+    background: #036B52;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+
+    &:hover {
+      background: #025a47;
+    }
+  }
+
+  &__setting-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+  }
+
+  &__setting-label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+
+  &__setting-value {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__value-button {
+    background: #036B52;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: #025a47;
+    }
+  }
+
+  &__value-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  &__address-text {
+    background: #f0f0f0;
+    padding: 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #666;
+    border: 1px solid #e0e0e0;
+  }
+
+  &__save-button {
+    background: #036B52;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+
+    &:hover {
+      background: #025a47;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .store-owner {
+    padding: 1rem;
+
+    &__header-title {
+      font-size: 1.5rem;
+    }
+
+    &__toggle-container {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    &__tab-container {
+      flex-direction: column;
+    }
+
+    &__tab {
+      text-align: center;
+    }
+
+    &__reservation-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    &__setting-value {
+      justify-content: center;
+    }
+  }
+}

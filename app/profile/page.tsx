@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import '@/styles/Profile.scss';
 
 export default function Profile() {
@@ -18,15 +19,21 @@ export default function Profile() {
     }
   };
 
+  const handleStoreOwnerMode = () => {
+    router.push('/store-owner');
+  };
+
   return (
     <div className="profile-page">
       {/* Profile Header */}
       <div className="profile-page__header">
         <div className="profile-page__user-info">
-          <img
+          <Image
             src="https://avatars.githubusercontent.com/u/84117554?v=4"
             alt="Profile"
             className="profile-page__avatar"
+            width={80}
+            height={80}
           />
           <div className="profile-page__user-details">
             <h1 className="profile-page__name">John Doe</h1>
@@ -40,6 +47,10 @@ export default function Profile() {
         <button className="profile-page__action-btn" onClick={() => router.push('/settings')}>
           <span className="profile-page__action-icon">⚙️</span>
           <span>Settings</span>
+        </button>
+        <button className="profile-page__action-btn" onClick={handleStoreOwnerMode}>
+          <span className="profile-page__action-icon">🏪</span>
+          <span>Store Owner Mode</span>
         </button>
         <button className="profile-page__action-btn" onClick={() => router.push('/help')}>
           <span className="profile-page__action-icon">❓</span>

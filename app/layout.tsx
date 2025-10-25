@@ -4,6 +4,8 @@ import "../styles/globals.scss";
 import "../styles/Navigation.scss";
 import Link from "next/link";
 import Footer from "../components/Footer";
+import { StoreOwnerProvider } from "../src/context/StoreOwnerContext";
+import StoreOwnerLayout from "@/components/StoreOwnerLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,24 +22,29 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className={inter.className}>
-        <div className="app-container">
-          <nav className="nav">
-            <div className="nav__container">
-              <Link href="/" className="nav__logo">
-                SAVOR
-              </Link>
-              <div className="nav__menu">
-                <Link href="/reservations">Đơn đặt hàng</Link>
-                <Link href="/partner">Cửa hàng/Đối tác</Link>
-                {/* <Link href="/profile">Tài khoản</Link> */}
-              </div>
+        <StoreOwnerProvider>
+          <StoreOwnerLayout>
+            <div className="app-container">
+              <nav className="nav">
+                <div className="nav__container">
+                  <Link href="/" className="nav__logo">
+                    SAVOR
+                  </Link>
+                  <div className="nav__menu">
+                    <Link href="/reservations">Đơn đặt hàng</Link>
+                    <Link href="/partner">Cửa hàng/Đối tác</Link>
+                    <Link href="/store-owner">Store Owner</Link>
+                    {/* <Link href="/profile">Tài khoản</Link> */}
+                  </div>
+                </div>
+              </nav>
+              <main className="main-content">
+                {children}
+              </main>
+              <Footer />
             </div>
-          </nav>
-          <main className="main-content">
-            {children}
-          </main>
-          <Footer />
-        </div>
+          </StoreOwnerLayout>
+        </StoreOwnerProvider>
       </body>
     </html>
   );

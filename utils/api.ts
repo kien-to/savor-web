@@ -67,7 +67,25 @@ export const createReservation = async (
 };
 
 export const getUserReservations = async (userId: string): Promise<Reservation[]> => {
-  const response = await api.get(`/api/users/${userId}/reservations`);
-  // console.log(response.data);
-  return response.data;
+  const response = await api.get(`/api/reservations`);
+  const data = response.data;
+  
+  // Handle new format with currentReservations and pastReservations
+  if (data.currentReservations && data.pastReservations) {
+    // Combine current and past reservations, current first
+    return [...data.currentReservations, ...data.pastReservations];
+  }
+  
+  // If data is already an array, return it (backward compatibility)
+  if (Array.isArray(data)) {
+    return data;
+  }
+  
+  // If data has a reservations property that's an array, return it (backward compatibility)
+  if (data.reservations && Array.isArray(data.reservations)) {
+    return data.reservations;
+  }
+  
+  // If we get here, return empty array as fallback
+  return [];
 }; 

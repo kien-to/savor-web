@@ -16,6 +16,21 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
   const [distance, setDistance] = useState<string>('');
   const [directionsUrl, setDirectionsUrl] = useState<string>('');
   const [distanceLoading, setDistanceLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || (window as { opera?: string }).opera;
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+      const isSmallScreen = window.innerWidth <= 768;
+      setIsMobile(isMobileDevice || isSmallScreen);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const fetchDistance = async () => {
@@ -69,13 +84,22 @@ export default function StoreCard({ store, onReserve }: StoreCardProps) {
   };
 
   const handleCardClick = () => {
+    // Don't allow card clicks on mobile devices
+    if (isMobile) {
+      return;
+    }
+    
     if (onReserve) {
       onReserve(store);
     }
   };
 
   return (
-    <div className="store-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+    <div 
+      className="store-card" 
+      onClick={handleCardClick} 
+      style={{ cursor: isMobile ? 'default' : 'pointer' }}
+    >
       <div className="store-card__image-container">
         <img
           src={store.imageUrl}
